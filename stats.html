@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignación de Estadísticas</title>
+    <link rel="stylesheet" href="asignarStats.css"> <!-- Archivo de estilos -->
+    <script defer src="asignarStats.js"></script> <!-- Tu archivo de script -->
+</head>
+<body>
+    <div class="container">
+        <h1>Asignación de Estadísticas</h1>
+
+        <form id="statsForm">
+            <div class="player-info">
+                <div class="player-details">
+                    <label for="playerName">Nombre del Usuario:</label>
+                    <span id="playerName" class="custom-font"></span> <!-- Nombre del Usuario -->
+                    <label for="characterName">Nombre del Personaje:</label>
+                    <span id="characterName" class="custom-font"></span> <!-- Nombre del Personaje -->
+                    <label for="classSelect">Clase:</label>
+                    <span id="classSelect" class="custom-font"></span> <!-- Clase -->
+                </div>
+            </div>            
+
+            <!-- Sección para mostrar puntos sin asignar -->
+            <div class="available-points">
+                <h3>Puntos Disponibles:</h3>
+                <p id="availablePoints">6</p> <!-- Puntos disponibles -->
+            </div>
+
+            <div class="stats-allocation">
+                <h3>Asigna tus Puntos</h3>
+                <div class="input-group">
+                    <label for="strengthPoints">Fuerza:</label>
+                    <input type="number" id="strengthPoints" min="0" max="6" value="0">
+                    <p>Influye en la calidad y cantidad de Armas y Armaduras que puedes usar.</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="agilityPoints">Agilidad:</label>
+                    <input type="number" id="agilityPoints" min="0" max="6" value="0">
+                    <p>Aumenta la velocidad y la cantidad de movimientos que tienes.</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="intellectPoints">Intelecto:</label>
+                    <input type="number" id="intellectPoints" min="0" max="6" value="0">
+                    <p>Influye en la calidad y cantidad de tus hechizos.</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="spiritPoints">Espíritu:</label>
+                    <input type="number" id="spiritPoints" min="0" max="6" value="0">
+                    <p>Reduce los efectos negativos al utilizar tus hechizos.</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="staminaPoints">Aguante:</label>
+                    <input type="number" id="staminaPoints" min="0" max="6" value="0">
+                    <p>Aumenta la salud.</p>
+                </div>
+            </div>
+
+            <button id="submitButton" type="submit" disabled>Asignar Estadísticas</button>
+        </form>
+
+        <p id="error-message" style="color: red; display: none;"></p> <!-- Mensaje de error -->
+        <div id="statsDisplay" class="stats-display"></div>
+    </div>
+
+    <script>
+        // Código para manejar el evento de envío
+        document.getElementById("statsForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Previene el envío del formulario
+            const strengthPoints = parseInt(document.getElementById("strengthPoints").value);
+            const agilityPoints = parseInt(document.getElementById("agilityPoints").value);
+            const intellectPoints = parseInt(document.getElementById("intellectPoints").value);
+            const spiritPoints = parseInt(document.getElementById("spiritPoints").value);
+            const staminaPoints = parseInt(document.getElementById("staminaPoints").value);
+
+            const totalAssignedPoints = strengthPoints + agilityPoints + intellectPoints + spiritPoints + staminaPoints;
+            const availablePoints = 6; // Cambia este valor según tu lógica
+
+            if (totalAssignedPoints > availablePoints) {
+                document.getElementById("error-message").textContent = "No puedes asignar más puntos de los disponibles.";
+                document.getElementById("error-message").style.display = "block";
+            } else {
+                document.getElementById("error-message").style.display = "none"; // Oculta el mensaje de error
+                const username = localStorage.getItem('username');
+                const playername = localStorage.getItem('playername');
+                const selectedClass = localStorage.getItem('selectedClass');
+
+                // Aquí llamas a la función que maneja la asignación de datos
+                guardarDatosPersonaje(username, playername, selectedClass, {
+                    strength: strengthPoints,
+                    agility: agilityPoints,
+                    intellect: intellectPoints,
+                    spirit: spiritPoints,
+                    stamina: staminaPoints
+                });
+            }
+        });
+
+        // Lógica para habilitar/deshabilitar el botón de envío basado en la asignación de puntos
+        const inputs = document.querySelectorAll("input[type='number']");
+        inputs.forEach(input => {
+            input.addEventListener("input", () => {
+                const totalPoints = Array.from(inputs).reduce((sum, input) => sum + parseInt(input.value), 0);
+                const availablePoints = 6; // Cambia este valor según tu lógica
+                document.getElementById("availablePoints").textContent = availablePoints - totalPoints;
+                document.getElementById("submitButton").disabled = totalPoints > availablePoints;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="asignarStats.css">
+    <title>Lista de Personajes</title>
+</head>
+<body>
+    <h1>Lista de Personajes</h1>
+    <div id="personajesContainer"></div>
+    <button id="aceptar" style="display: none;">Aceptar</button> <!-- Botón oculto por defecto -->
+
+    <script src="todosPersonajes.js"></script>
+    <script>
+        // Función para mostrar personajes en el HTML
+        function mostrarPersonajes() {
+            const personajes = cargarPersonajes(); // Carga los personajes
+
+            const personajesContainer = document.getElementById('personajesContainer');
+            const aceptarButton = document.getElementById('aceptar');
+
+            if (personajes.length === 0) {
+                personajesContainer.innerHTML = '<p>No hay personajes almacenados.</p>'; // Mensaje si no hay personajes
+                return;
+            }
+
+            personajes.forEach(personaje => {
+                const personajeDiv = document.createElement('div');
+                personajeDiv.className = 'personaje';
+                personajeDiv.innerHTML = `
+                    <h2>Jugador Nº (${personaje.id})</h2>
+                    <p><strong>Nombre del Jugador:</strong> ${personaje.playername} (${personaje.username})</p>
+                    <p><strong>Clase:</strong> ${personaje.selectedClass}</p>
+                    <p><strong>Fuerza:</strong> ${personaje.strength}</p>
+                    <p><strong>Agilidad:</strong> ${personaje.agility}</p>
+                    <p><strong>Intelecto:</strong> ${personaje.intellect}</p>
+                    <p><strong>Espíritu:</strong> ${personaje.spirit}</p>
+                    <p><strong>Aguante:</strong> ${personaje.stamina}</p>
+                    <p><strong>Puntos Sin Asignar:</strong> ${personaje.availablePoints}</p>
+                `;
+                personajesContainer.appendChild(personajeDiv); // Agrega el div del personaje al contenedor
+            });
+
+            // Mostrar el botón "Aceptar" solo si hay personajes
+            aceptarButton.style.display = 'block'; 
+        }
+
+        // Agregar el evento al botón "Aceptar"
+        document.getElementById('aceptar').addEventListener('click', () => {
+            window.location.href = 'game.html'; // Redirigir a la página del juego
+        });
+
+        // Ejecuta la función al cargar el documento
+        document.addEventListener('DOMContentLoaded', mostrarPersonajes);
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+/* game.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Cambiado para estirar el contenedor al 100% de altura */
+    height: 100vh;
+    margin: 0;
+    background-color: #1e1e1e;
+}
+
+#game-container {
+    display: flex; /* Usar flexbox para alinear el tablero y el contenedor de personajes */
+    width: 100%; /* Asegura que el contenedor ocupe el 100% de ancho */
+    height: 100%; /* Asegura que el contenedor ocupe el 100% de alto */
+}
+
+#character-list {
+    width: 300px; /* Ancho fijo para el contenedor de personajes */
+    padding: 20px; /* Espaciado alrededor de los personajes */
+    background-color: #2e2e2e; /* Color de fondo para distinguir */
+    border-right: 1px solid #ccc; /* Borde derecho para separación */
+    overflow-y: auto; /* Agregar scroll si hay muchos personajes */
+    color: white; /* Color del texto para mejor visibilidad */
+    display: flex; /* Para alinear los elementos dentro */
+    flex-direction: column; /* Alineación en columna */
+    gap: 10px; /* Espaciado entre los personajes */
+}
+
+.character-item {
+    background-color: #3e3e3e; /* Fondo distinto para los elementos de personaje */
+    padding: 10px; /* Espaciado interno para los elementos */
+    border-radius: 5px; /* Bordes redondeados para los elementos */
+    transition: background-color 0.3s; /* Transición suave al pasar el mouse */
+}
+
+.character-item:hover {
+    background-color: #4e4e4e; /* Cambio de color al pasar el mouse */
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(32, 1fr); /* 32 columnas de igual tamaño */
+    grid-template-rows: repeat(32, 1fr); /* 32 filas de igual tamaño */
+    gap: 4px; /* Aumentar el espacio entre las casillas */
+    position: relative; /* Asegura que el tablero se posicione en su contenedor */
+    z-index: 1; /* Asegura que el tablero esté por encima de otros elementos */
+    flex: 1; /* Permite que el tablero ocupe el espacio restante */
+    min-width: 640px; /* Ancho mínimo para mantener la forma cuadrada (32*20) */
+    min-height: 640px; /* Altura mínima para mantener la forma cuadrada (32*20) */
+    background-color: #333; /* Color de fondo del tablero */
+    border-radius: 10px; /* Bordes redondeados para el tablero */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra alrededor del tablero */
+}
+
+.tile {
+    background-color: #444;
+    border: 1px solid #222;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra para las casillas */
+}
+
+.player {
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    border-radius: 50%;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); /* Sombra para el jugador */
+}
+
+.highlight {
+    background-color: lightblue;
+}
+
+.enemy {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Sombra para el enemigo */
+}
+
+.info {
+    position: absolute; /* Asegura que la información aparezca correctamente */
+    background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para que la info sea legible */
+    padding: 2px;
+    border-radius: 5px;
+    z-index: 3; /* Asegura que la información esté por encima de otros elementos */
+}

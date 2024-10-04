@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Crawler - Continuar o Nuevo Juego</title>
+    <link rel="stylesheet" href="welcome.css"> <!-- Puedes añadir estilos si lo deseas -->
+</head>
+<body class="continua-nuevo">
+    <h1>¿Qué deseas hacer?</h1>
+    <button id="continuar">Continuar Partida</button>
+    <button id="nuevoJuego">Empezar Juego Nuevo</button>
+
+    <script>
+        document.getElementById('continuar').addEventListener('click', () => {
+            // Redirigir a la página del juego en modo continuado
+            window.location.href = 'game.html'; // Cambia a la página donde se continua el juego
+        });
+
+        document.getElementById('nuevoJuego').addEventListener('click', () => {
+            // Limpiar el localStorage de los personajes
+            localStorage.removeItem('personajes'); // Elimina solo el arreglo de personajes
+
+            localStorage.clear();
+
+            // Redirigir a la página de nombre de usuario
+            window.location.href = 'username.html'; // Regresa a la página de nombre de usuario
+        });
+    </script>
+</body>
+</html>

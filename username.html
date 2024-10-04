@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona Nombres</title>
+    <link rel="stylesheet" href="nombres.css">
+    <script defer src="datosPersonaje.js"></script> <!-- Agregar el archivo de datosPersonaje.js -->
+</head>
+<body>
+    <div class="container">
+        <h1>Asignación de nombres.</h1>
+        <div class="input-group">
+            <label for="username">Nombre de Usuario:</label>
+            <input type="text" id="username" placeholder="Ingresa tu nombre de usuario">
+        </div>
+        <div class="input-group">
+            <label for="playername">Nombre del Personaje:</label>
+            <input type="text" id="playername" placeholder="Ingresa el nombre de tu personaje">
+        </div>
+        <button id="continue-button">Continuar</button>
+        <p id="error-message" style="color: red; display: none;"></p> <!-- Mensaje de error -->
+    </div>
+
+    <script>
+        // Código de redirección y validación
+        document.getElementById("continue-button").addEventListener("click", function() {
+            manejarDatos();
+        });
+    </script>
+</body>
+</html>
