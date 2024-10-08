@@ -21,6 +21,7 @@ export function manejarDatosCompleto() { // Aquí exportamos la función
     const username = localStorage.getItem("username");
     const playername = localStorage.getItem("playername");
     const selectedClass = localStorage.getItem("selectedClass");
+    const selectedPortrait = localStorage.getItem("selectedPortrait"); // Obtener el retrato seleccionado
 
     // Obtiene las estadísticas del localStorage
     const stats = {
@@ -44,6 +45,7 @@ export function manejarDatosCompleto() { // Aquí exportamos la función
         username: username,
         playername: playername,
         selectedClass: selectedClass,
+        selectedPortrait: selectedPortrait, // Agregar el retrato seleccionado
         nivel: 1, // Nivel inicial del personaje
         strength: stats.strength,
         agility: stats.agility,

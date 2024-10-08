@@ -1,0 +1,89 @@
+<!-- retratos.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona el Retrato</title>
+    <link rel="stylesheet" href="retratos.css"> <!-- Estilos para la galería de retratos -->
+    <script defer src="datosPersonaje.js"></script> <!-- Asegúrate que este archivo existe -->
+</head>
+<body>
+    <div class="container">
+        <h1>Selecciona el retrato para tu personaje</h1>
+        <div id="user-info"></div> <!-- Información del usuario y personaje -->       
+        <div id="portrait-gallery" class="gallery"></div> <!-- Contenedor para los retratos generados dinámicamente -->
+        
+        <button id="confirm-button" style="display: none;">Confirmar selección</button>
+    </div>
+
+    <script>
+        // Obtener el nombre de usuario, nombre de personaje, y clase seleccionada del localStorage
+        const username = localStorage.getItem("username");
+        const playername = localStorage.getItem("playername");
+        const selectedClass = localStorage.getItem("selectedClass");
+        
+        // Mostrar los nombres en la página
+        const userInfo = document.getElementById("user-info");
+        userInfo.textContent = `Usuario: ${username || "desconocido"}, Personaje: ${playername || "desconocido"}, Clase: ${selectedClass || "desconocida"}`;
+
+        // Definir la ruta base para los retratos según la clase seleccionada
+        const basePath = `retratos/jugadores/${selectedClass}/`;
+
+        // Crear un contenedor para las imágenes
+        const gallery = document.getElementById('portrait-gallery');
+        
+            // Definir un objeto para mapear las clases a sus tipos
+            const typeMapping = {
+                'aruspice': 'aruspice',
+                'conjurador': 'conjurador',
+                'evocador': 'evocador',
+                'arcanista': 'arcanista'
+            };
+
+            // Cargar las 8 imágenes correspondientes a la clase seleccionada
+            for (let i = 1; i <= 8; i++) {
+                const img = document.createElement('img');
+                img.src = `${basePath}${i.toString().padStart(2, '0')}.png`; // Formato '01.png', '02.png', etc.
+                img.alt = `Retrato ${i}`;
+                img.classList.add('portrait');
+
+                // Añadir un id a cada imagen para identificarla luego
+                img.id = `portrait-${i}`;
+                
+                // Asignar el data-type según la clase seleccionada
+                img.setAttribute('data-type', typeMapping[selectedClass] || ''); // Usa el valor correcto
+
+                // Añadir un evento de clic a cada imagen
+                img.addEventListener('click', function() {
+                    // Eliminar la selección previa si existe
+                    document.querySelectorAll('.portrait').forEach(p => p.classList.remove('selected'));
+                    
+                    // Marcar la imagen seleccionada
+                    this.classList.add('selected');
+                    
+                    // Mostrar el botón de confirmar una vez que se selecciona un retrato
+                    document.getElementById('confirm-button').style.display = 'block';
+
+                    // Guardar el id del retrato seleccionado en el localStorage
+                    localStorage.setItem('selectedPortrait', this.id);
+                });
+
+                // Añadir la imagen a la galería
+                gallery.appendChild(img);
+            }
+
+        // Manejar la confirmación de la selección
+        const confirmButton = document.getElementById('confirm-button');
+        confirmButton.addEventListener('click', function() {
+            const selectedPortrait = localStorage.getItem('selectedPortrait');
+            if (selectedPortrait) {
+                alert(`Has seleccionado el retrato: ${selectedPortrait}`);
+                guardarRetrato(selectedPortrait); // Llama a la función que guarda el retrato seleccionado
+            } else {
+                alert('Por favor, selecciona un retrato.');
+            }
+        });
+    </script>
+</body>
+</html>

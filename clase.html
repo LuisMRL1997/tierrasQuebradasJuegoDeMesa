@@ -1,3 +1,4 @@
+<!-- clase.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -109,11 +110,11 @@
 
         // Manejar la selección de clase
         document.querySelectorAll('.class-button').forEach(button => {
-    button.addEventListener('click', function() {
+        button.addEventListener('click', function() {
         const selectedClass = this.id; // Este es el id del botón, debe coincidir con la clase
         localStorage.setItem("selectedClass", selectedClass); // Guardar la clase seleccionada
         alert(`Has elegido la clase: ${selectedClass}`);
-        window.location.href = 'stats.html'; // Redirigir a la siguiente página
+        window.location.href = 'retratos.html'; // Redirigir a la siguiente página
     });
 });
     </script>

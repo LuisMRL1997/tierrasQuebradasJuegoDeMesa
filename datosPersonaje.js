@@ -1,10 +1,11 @@
-// datosPersonajes.js
+// datosPersonaje.js
 
 // Función para almacenar los datos del personaje en localStorage
-function guardarDatosPersonaje(username, playername, selectedClass, stats) {
+function guardarDatosPersonaje(username, playername, selectedClass, selectedPortrait, stats) {
     localStorage.setItem('username', username);
     localStorage.setItem('playername', playername);
     localStorage.setItem('selectedClass', selectedClass); // Almacena la clase elegida
+    localStorage.setItem('selectedPortrait', selectedPortrait); // Almacena el retrato seleccionado
 
     // Almacenar estadísticas y puntos sin asignar
     localStorage.setItem('strength', stats.strength); // Guarda la fuerza
@@ -17,6 +18,34 @@ function guardarDatosPersonaje(username, playername, selectedClass, stats) {
 
     // Redirigir a clase.html después de almacenar los datos
     window.location.href = "clase.html"; // Verifica que sea la página correcta
+}
+
+// Función para almacenar el retrato del personaje en localStorage
+function guardarRetrato(selectedPortrait) {
+    localStorage.setItem('selectedPortrait', selectedPortrait); // Almacena el retrato seleccionado
+
+    // Redirigir a la página de clase después de almacenar el retrato
+    window.location.href = "stats.html"; // Verifica que sea la página correcta
+}
+
+// Función para manejar el retrato desde la página correspondiente
+function manejarRetrato() {
+    const selectedPortrait = document.querySelector('input[name="portrait"]:checked'); // Suponiendo que hay inputs de tipo radio para seleccionar el retrato
+    const errorMessage = document.getElementById("error-message");
+
+    // Verificar que se haya seleccionado un retrato
+    if (!selectedPortrait) {
+        errorMessage.textContent = "Por favor, selecciona un retrato.";
+        errorMessage.style.display = "block"; // Mostrar el mensaje de error
+    } else {
+        errorMessage.style.display = "none"; // Ocultar el mensaje de error
+
+        // Obtener el valor del retrato seleccionado
+        const portraitValue = selectedPortrait.value;
+
+        // Almacenar el retrato
+        guardarRetrato(portraitValue);
+    }
 }
 
 // Función para manejar los datos desde username.html
@@ -33,6 +62,7 @@ function manejarDatos() {
         errorMessage.style.display = "none"; // Ocultar el mensaje de error
 
         const selectedClass = localStorage.getItem("selectedClass"); // Obtiene la clase elegida
+        const selectedPortrait = localStorage.getItem("selectedPortrait"); // Obtiene el retrato seleccionado
 
         // Obtener estadísticas de los inputs o de localStorage
         const stats = {
@@ -46,6 +76,9 @@ function manejarDatos() {
         };
 
         // Almacenar los nombres y las estadísticas
-        guardarDatosPersonaje(username, playername, selectedClass, stats);
+        guardarDatosPersonaje(username, playername, selectedClass, selectedPortrait, stats);
     }
 }
+
+
+

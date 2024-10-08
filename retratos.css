@@ -1,0 +1,291 @@
+/* Estilos generales para la página */
+body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 90%;
+    width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Títulos */
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Descripción de clase */
+.class-description {
+    background-color: rgba(40, 40, 40, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.class-description h2, .class-description h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.class-description p {
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+/* Botones */
+.class-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 2rem auto;
+}
+
+.class-button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para el contenedor de los Conjuradores */
+.conjurador-container {
+    background: linear-gradient(135deg, 
+        #FFA07A 0%, /* Salmón claro */
+        #FF6347 100% /* Salmón oscuro */
+    );
+    border: 2px solid #FF4500; /* Borde anaranjado */
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    font-family: 'Arial', sans-serif;
+}
+
+.conjurador-container h2, .conjurador-container h3 {
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.conjurador-container p {
+    text-indent: 20px;
+    margin: 10px 0;
+}
+
+.conjurador-container ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.conjurador-container ul li {
+    padding-left: 20px;
+    position: relative;
+}
+
+.conjurador-container ul li::before {
+    content: "•";
+    color: #FF4500;
+    position: absolute;
+    left: 0;
+}
+
+/* Botón dentro del contenedor Conjurador */
+.conjurador-container .class-button {
+    background-color: #FF6347;
+    color: #fff;
+    border: 2px solid #FF4500;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.conjurador-container .class-button:hover {
+    background-color: #FF4500;
+    transform: scale(1.05);
+}
+
+/* Media Queries para dispositivos más pequeños */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .class-description {
+        padding: 1rem;
+    }
+    
+    .class-button {
+        font-size: 0.9rem;
+    }
+    
+    .conjurador-container {
+        padding: 15px;
+    }
+    
+    .conjurador-container h2, .conjurador-container h3 {
+        font-size: 1.5rem;
+    }
+    
+    .conjurador-container .class-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .conjurador-container h2, .conjurador-container h3 {
+        font-size: 1.2rem;
+    }
+    
+    .conjurador-container .class-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Botones generales */
+.class-button {
+    background-color: #3498db;
+    color: white;
+    border: 2px solid #2980b9;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Agrega un poco de sombra */
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    display: block;
+    margin: 2rem auto;
+}
+
+.class-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Mayor sombra en hover */
+    transform: translateY(-3px); /* Efecto de levitar un poco */
+}
+
+/* Botones dentro del contenedor Conjurador */
+.conjurador-container .class-button {
+    background-color: #FF6347;
+    color: #fff;
+    border: 2px solid #FF4500;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombras para más presencia */
+}
+
+.conjurador-container .class-button:hover {
+    background-color: #FF4500;
+    transform: translateY(-3px); /* Efecto de levitación */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+}
+
+/* Efecto "activo" cuando se presiona el botón */
+.class-button:active,
+.conjurador-container .class-button:active {
+    transform: translateY(0); /* Restablece la levitación */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra reducida */
+}
+
+/* Estilos para el botón de confirmar selección */
+#confirm-button {
+    background-color: #28a745; /* Verde de confirmación */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+#confirm-button:hover {
+    background-color: #218838; /* Color verde más oscuro al hacer hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px); /* Efecto de levitación al hacer hover */
+}
+
+#confirm-button:active {
+    transform: translateY(0); /* Restablece la levitación */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra reducida al hacer clic */
+}
+
+/* Para ocultar el botón inicialmente */
+#confirm-button.hidden {
+    display: none;
+}
+
+/* Estilos base para los retratos */
+.portrait {
+    width: 64px; /* Ancho del retrato */
+    height: 64px; /* Altura del retrato */
+    margin: 5px;
+    cursor: pointer;
+    transition: border 0.3s; /* Transición suave para el borde */
+}
+
+/* Estilos específicos para cada tipo de retrato cuando se selecciona */
+.selected[data-type="aruspice"] {
+    border: 3px solid #FFD700; /* Borde dorado cuando se selecciona */
+    box-shadow: 0 0 10px #FFD700; /* Sombra para resaltar el retrato */
+}
+
+.selected[data-type="conjurador"] {
+    border: 3px solid #f4694a;
+    box-shadow: 0 0 10px #f4694a;
+    
+}
+
+.selected[data-type="evocador"] {
+    border: 3px solid #1c594c;
+    box-shadow: 0 0 10px #1c594c;
+    
+}
+
+.selected[data-type="arcanista"] {
+    border: 3px solid #270082;
+    box-shadow: 0 0 10px #270082;
+}

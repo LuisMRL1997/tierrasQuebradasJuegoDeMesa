@@ -14,10 +14,27 @@ class Player {
         localStorage.setItem('personajes', JSON.stringify(this.personajes));
     }
 
+    // Método para asignar un ID único del 1 al 4
+    asignarId() {
+        const idsOcupados = this.personajes.map(personaje => personaje.id); // Extrae los IDs ocupados
+        for (let id = 1; id <= 4; id++) {
+            if (!idsOcupados.includes(id)) {
+                return id; // Devuelve el primer ID disponible del 1 al 4
+            }
+        }
+        return null; // Si todos los IDs están ocupados
+    }
+
     // Método para agregar un personaje
     agregarPersonaje(nuevoPersonaje) {
-        this.personajes.push(nuevoPersonaje); // Agrega el nuevo personaje al arreglo
-        this.guardarPersonajes(); // Guarda el arreglo actualizado
+        const nuevoId = this.asignarId(); // Asignamos un ID automáticamente
+        if (nuevoId !== null) {
+            nuevoPersonaje.id = nuevoId; // Asignar el ID disponible
+            this.personajes.push(nuevoPersonaje); // Agrega el nuevo personaje al arreglo
+            this.guardarPersonajes(); // Guarda el arreglo actualizado
+        } else {
+            console.error('No se pueden agregar más personajes. Todos los IDs están ocupados.');
+        }
     }
 
     // Método para calcular la salud de un personaje
