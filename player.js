@@ -51,13 +51,13 @@ class Player {
         let bonificacionVersatilidad = 0;
 
         // Verificar si la clase es Arcanista
-        if (versatilidad % 6 === 0 && versatilidad > 0) {
+        if (versatilidad % 3 === 0 && versatilidad > 0) {
             if (selectedClass === 'arcanista') {
-                // Si es Arcanista, 2 de poder por cada 6 de versatilidad
-                bonificacionVersatilidad = Math.floor(versatilidad / 6) * 2;
+                // Si es Arcanista, 3 de poder por cada 3 de versatilidad
+                bonificacionVersatilidad = Math.floor(versatilidad / 3) * 3;
             } else {
-                // Para otras clases, 1 de poder por cada 6 de versatilidad
-                bonificacionVersatilidad = Math.floor(versatilidad / 6);
+                // Para otras clases, 1 de poder por cada 3 de versatilidad
+                bonificacionVersatilidad = Math.floor(versatilidad / 3);
             }
         }
 
