@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="asignarStats.css">
+    <title>Lista de Personajes</title>
+</head>
+<body>
+    <h1>Lista de Personajes</h1>
+    <div id="personajesContainer"></div>
+    <button id="aceptar" style="display: none;">Aceptar</button> <!-- Botón oculto por defecto -->
+
+    <script type="module">
+        import { manejarDatosCompleto } from './todosPersonajes.js'; // Importar la función para manejar creación de personajes
+        import playerInstance from './player.js'; // Importar la instancia de Player desde player.js
+
+        // Ejecutar la función para manejar datos completos (creación del personaje) al cargar el documento
+        document.addEventListener('DOMContentLoaded', () => {
+            manejarDatosCompleto(); // Asegura que el personaje se cree si no existe
+            mostrarPersonajes(); // Mostrar los personajes después de la creación
+        });
+
+        // Función para mostrar personajes en el HTML
+        function mostrarPersonajes() {
+            const personajes = playerInstance.cargarPersonajes(); // Cargar personajes desde player.js
+
+            const personajesContainer = document.getElementById('personajesContainer');
+            const aceptarButton = document.getElementById('aceptar');
+
+            if (personajes.length === 0) {
+                personajesContainer.innerHTML = '<p>No hay personajes almacenados.</p>'; // Mensaje si no hay personajes
+                return;
+            }
+
+            personajes.forEach(personaje => {
+                const salud = playerInstance.calcularSalud(personaje); // Calcula la salud
+                const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
+
+                const personajeDiv = document.createElement('div');
+                personajeDiv.className = 'personaje';
+                personajeDiv.innerHTML = `
+                    <h2>Jugador Nº (${personaje.id})</h2>
+                    <p><strong>Nombre del Jugador:</strong> ${personaje.playername} (${personaje.username})</p>
+                    <p><strong>Clase:</strong> ${personaje.selectedClass}</p>
+                    <p><strong>Nivel:</strong> ${personaje.nivel || 1}</p> <!-- Añadido nivel por defecto 1 -->
+                    <p><strong>Salud:</strong> ${salud}</p> <!-- Mostrar salud calculada -->
+                    <p><strong>Fuerza:</strong> ${personaje.strength}</p>
+                    <p><strong>Agilidad:</strong> ${personaje.agility}</p>
+                    <p><strong>Intelecto:</strong> ${personaje.intellect}</p>
+                    <p><strong>Espíritu:</strong> ${personaje.spirit}</p>
+                    <p><strong>Aguante:</strong> ${personaje.stamina}</p>
+                    <p><strong>Versatilidad:</strong> ${personaje.versatility || 0}</p> <!-- Nueva estadística -->
+                    <p><strong>Puntos Sin Asignar:</strong> ${personaje.availablePoints}</p>
+                    <p><strong>Acciones:</strong> ${personaje.acciones || playerInstance.calcularAcciones(personaje)}</p> <!-- Mostrar acciones calculadas -->
+                    <p><strong>Poder de Ataque:</strong> ${poderAtaque}</p> <!-- Mostrar poder de ataque calculado -->
+                    <p><strong>Poder Físico:</strong> ${personaje.poderFisico || 0}</p> <!-- Nueva estadística -->
+                    <p><strong>Poder con Hechizos:</strong> ${personaje.poderHechizos || 0}</p> <!-- Nueva estadística -->
+                    <p><strong>Poder Arma:</strong> ${personaje.poderArma || 0}</p> <!-- Nueva estadística -->
+                `;
+                personajesContainer.appendChild(personajeDiv); // Agrega el div del personaje al contenedor
+            });
+
+            // Mostrar el botón "Aceptar" solo si hay personajes
+            aceptarButton.style.display = 'block';
+        }
+
+        // Agregar el evento al botón "Aceptar"
+        document.getElementById('aceptar').addEventListener('click', () => {
+            window.location.href = 'game.html'; // Redirigir a la página del juego
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/* welcome.css */
+body {
+    display: flex;
+    flex-direction: column; /* Apila el contenido verticalmente */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #1e1e1e;
+    color: white;
+    text-align: center;
+    font-family: 'Arial', sans-serif; /* Cambia a la fuente deseada */
+}
+
+.container {
+    background-color: rgba(30, 30, 30, 0.8); /* Fondo semi-transparente para el contenedor */
+    padding: 20px;
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
+    width: 90%; /* Ancho del contenedor */
+    max-width: 400px; /* Ancho máximo para el contenedor */
+}
+
+h1 {
+    margin-bottom: 30px; /* Aumenta el margen inferior */
+    font-size: 2.5rem; /* Tamaño de fuente más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra de texto */
+}
+
+.input-group {
+    margin-bottom: 20px; /* Espaciado entre los grupos de entrada */
+    text-align: left; /* Alinear etiquetas a la izquierda */
+}
+
+label {
+    display: block; /* Hace que las etiquetas ocupen toda la línea */
+    margin-bottom: 5px; /* Espaciado entre la etiqueta y el campo de entrada */
+    font-weight: bold; /* Negrita para las etiquetas */
+}
+
+input[type="text"] {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px; /* Espaciado interno para mayor comodidad */
+    font-size: 1rem; /* Tamaño de fuente estándar */
+    border: 2px solid #3498db; /* Borde del campo de entrada */
+    border-radius: 5px; /* Esquinas redondeadas */
+    background-color: #2c3e50; /* Color de fondo del campo de entrada */
+    color: white; /* Color del texto en el campo de entrada */
+    transition: border-color 0.3s; /* Transición para el borde */
+}
+
+input[type="text"]:focus {
+    border-color: #2980b9; /* Cambia el color del borde al enfocar */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+button {
+    padding: 12px 24px; /* Aumenta el tamaño del botón */
+    font-size: 1.2rem; /* Tamaño de fuente más grande */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s; /* Transición en el tamaño */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para efecto de profundidad */
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px); /* Eleva el botón al pasar el ratón */
+}
+
+button:active {
+    transform: translateY(0); /* Regresa a la posición original al hacer clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Reduce la sombra al hacer clic */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Reduce el tamaño del título en pantallas pequeñas */
+    }
+
+    .container {
+        padding: 15px; /* Reduce el padding del contenedor */
+    }
+
+    button {
+        padding: 10px 20px; /* Ajusta el tamaño del botón */
+        font-size: 1rem; /* Tamaño de fuente más pequeño */
+    }
+
+    input[type="text"] {
+        font-size: 0.9rem; /* Ajusta el tamaño de la fuente del campo de entrada */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem; /* Reduce aún más el tamaño del título en pantallas muy pequeñas */
+    }
+
+    .container {
+        width: 95%; /* Aumenta el ancho del contenedor en pantallas muy pequeñas */
+    }
+
+    button {
+        padding: 8px 16px; /* Aumenta aún más el tamaño del botón */
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    }
+
+    input[type="text"] {
+        font-size: 0.8rem; /* Ajusta el tamaño de la fuente del campo de entrada */
+    }
+}

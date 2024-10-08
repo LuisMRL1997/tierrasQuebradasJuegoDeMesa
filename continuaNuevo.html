@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Crawler - Continuar o Nuevo Juego</title>
+    <link rel="stylesheet" href="welcome.css"> <!-- Puedes añadir estilos si lo deseas -->
+    <script type="module" src="funcionalidades/reinicio.js" defer></script> <!-- Importar reinicio.js desde la carpeta funcionalidades -->
+</head>
+<body class="continua-nuevo">
+    <h1>¿Qué deseas hacer?</h1>
+    <button id="continuar">Continuar Partida</button>
+    <button id="nuevoJuego">Empezar Juego Nuevo</button>
+
+    <script type="module">
+        import { reiniciarJuego } from './funcionalidades/reinicio.js'; // Asegúrate que la ruta es correcta
+
+        // Espera a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('continuar').addEventListener('click', () => {
+                // Redirigir a la página del juego en modo continuado
+                window.location.href = 'game.html'; // Cambia a la página donde se continúa el juego
+            });
+
+            document.getElementById('nuevoJuego').addEventListener('click', () => {
+                reiniciarJuego(); // Llama a la función para reiniciar el juego
+
+                // Redirigir a la página de nombre de usuario
+                window.location.href = 'username.html'; // Regresa a la página de nombre de usuario
+            });
+        });
+    </script>
+</body>
+</html>

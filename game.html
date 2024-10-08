@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tierras Quebradas: El juego de mesa</title>
+  <link rel="stylesheet" href="game.css"> <!-- Vincula el archivo CSS -->
+</head>
+<body>
+  <div id="global-container">
+    <div id="turn-time-container">
+      <button id="toggle-turn-time" class="resize-btn">🔽</button> <!-- Botón para minimizar/maximizar -->
+      <h2>Ejemplo contenedor turnos y tiempo</h2>
+    </div>
+
+    <div id="middle-container">
+      <div id="character-list-container">
+        <button id="toggle-character-list" class="resize-btn">🔽</button> <!-- Botón para minimizar/maximizar -->
+        <div id="character-list"></div> <!-- Este contenedor mostrará la lista de personajes -->
+      </div>
+
+      <div id="game-board-container"> <!-- Nuevo contenedor para el tablero -->
+        <div id="game-board"></div> <!-- El tablero se mantiene dentro -->
+      </div>
+
+      <div id="enemies-container">
+        <button id="toggle-enemies" class="resize-btn">🔽</button> <!-- Botón para minimizar/maximizar -->
+        <h2>Ejemplo contenedor enemigos</h2>
+      </div>
+    </div>
+
+    <div id="abilities-container">
+      <button id="toggle-abilities" class="resize-btn">🔽</button> <!-- Botón para minimizar/maximizar -->
+      <h2>Ejemplo contenedor de habilidades</h2>
+    </div>
+  </div>
+
+  <!-- Vincula el archivo de JavaScript -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

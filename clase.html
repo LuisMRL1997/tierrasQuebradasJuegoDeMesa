@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona la Clase</title>
+    <link rel="stylesheet" href="clases.css"> <!-- Puedes usar el mismo CSS o crear uno nuevo -->
+</head>
+<body>
+    <div class="container">
+        <h1>Selecciona la clase para tu personaje</h1>
+        <div id="user-info"></div>
+        <div class="button-group">
+            <div class="button-container">
+                <div class="class-description aruspice-container">
+                    <h2>Arúspice</h2>
+                    <p>Los Arúspices son los usuarios de la magia de la Radiancia, el fuego dorado que irradia bondad y compasión. Estas almas nobles, guiadas por la empatía y la caridad, caminan por el sendero de la Virtud, dedicándose a actos de bondad y misericordia. Con la Radiancia, no solo sanan heridas y alivian dolores, sino que también tejen lazos profundos con todas las formas de vida, especialmente con la flora que les rodea.</p>
+                    
+                    <p>Con un toque sagrado, los Arúspices pueden acelerar el crecimiento de las plantas y, en momentos de conexión intensa con la naturaleza, incluso transformarse en animales o espíritus del bosque. A pesar de su inclinación hacia la paz, son guerreros valientes. En la batalla, se defienden con descargas de fuego sagrado y lanzan rayos de luz divina, convirtiéndose en faros de esperanza en medio del caos.</p>
+                    
+                    <h3>Habilidad Especial: Misericordia de la Radiancia</h3>
+                    <p>Cada vez que inicia su turno, el Arúspice recupera vida, reflejando su conexión con la luz curativa que emana de su ser.</p>
+                    
+                    <h3>Costo de Magia</h3>
+                    <p>Utilizar sus poderosos hechizos tiene un precio: los Arúspices reciben daño cada vez que desatan su magia, recordando que la luz también puede ser un arma de sacrificio.</p>
+                    
+                    <h3>Hechizos Iniciales:</h3>
+                    <ul>
+                        <li><strong>Expiación:</strong> Inflige daño a un enemigo, debilitando su poder al reducir el daño de su próximo ataque.</li>
+                        <li><strong>Sanación:</strong> Restaura la salud de un aliado o del propio Arúspice, proporcionando un bálsamo en tiempos de necesidad.</li>
+                    </ul>                   
+                    <button class="class-button" id="aruspice">Elegir</button>
+                </div> 
+
+                <div class="class-description conjurador-container">
+                    <h2>Conjurador</h2>
+                    <p>Los Conjuradores son los usuarios del Barion, la energía primigenia que da vida a los elementos. Utilizando su vasto conocimiento de las ciencias naturales, manipulan fuego, hielo, agua y tierra, desatando asombrosos efectos. Pueden invocar bolas de fuego, ráfagas de hielo, oleadas de agua y muros de roca, creando fenómenos naturales con precisión matemática.</p>
+                    
+                    <p>Su magia elemental se basa en la curiosidad y el estudio constante, permitiéndoles conjurar objetos efímeros como comida, bebida y herramientas. Sin embargo, este poder conlleva consecuencias: el uso intensivo del Barion puede provocar fatiga, dolores de cabeza y, en casos extremos, desmayos.</p>
+                    
+                    <h3>Habilidad Especial: Flexibilidad del Barion</h3>
+                    <p>Los conjuradores cuentan con una acción extra cada turno.</p>
+                    
+                    <h3>Costo de Magia</h3>
+                    <p>El uso de la magia del Barion puede acabar por dejar al usuario aturdido y perder su turno.</p>
+                    
+                    <h3>Hechizos Iniciales:</h3>
+                    <ul>
+                        <li><strong>Fuego Conjurado:</strong> Lanza una bola de fuego que inflige daño a un enemigo.</li>
+                        <li><strong>Conjurar Pan:</strong> Genera un pán mágico que el usuario o los aliados pueden consumir para recuperar salud.</li>
+                    </ul>                   
+                    <button class="class-button" id="conjurador">Elegir</button>
+                </div>
+            
+                <div class="class-description evocador-container">
+                    <h2>Evocador</h2>
+                    <p>Los Evocadores son los portadores del Aquilón, el viento de la libertad que simboliza ideales de justicia y equilibrio. Guiados por un profundo sentido de responsabilidad, utilizan su conexión con el Aquilón para generar explosiones y ondas de choque con sus gritos y movimientos. Estos sonidos, que resuenan con la esencia de la libertad, pueden calmar a sus enemigos o infundirles miedo.</p>
+                    
+                    <p>Además, los Evocadores pueden cristalizar el Aquilón en Veridian, un cristal verde esmeralda que utilizan para forjar armas y armaduras que reflejan sus ideales. Estas armas no solo son efectivas en combate, sino que también almacenan energía de los impactos, liberándola en potentes ataques.</p>
+                    
+                    <p>En el plano espiritual, tienen la capacidad de conectarse con los espíritus de sus antepasados, buscando guía y apoyo en momentos de necesidad. Sin embargo, canalizar el Aquilón conlleva sacrificios; el uso constante puede entumecer sus articulaciones y hacerles perder temporalmente la voz, recordándoles la importancia del equilibrio en el uso de su magia.</p>
+                    
+                    <h3>Habilidad Especial: Eco Aquilonal</h3>
+                    <p>Reduce el daño recibido y al ser atacado libera ondas de choque.</p>
+                    
+                    <h3>Costo de Magia</h3>
+                    <p>El uso del Aquilón puede causar entumecimiento, limitando la resistencia del Evocador.</p>
+                    
+                    <h3>Hechizos Iniciales:</h3>
+                    <ul>
+                        <li><strong>Explosión de eco:</strong> Causa daño a los enemigos cercanos.</li>
+                        <li><strong>Liberación:</strong> Libera a un aliado de sus ataduras y le permite escapar.</li>
+                    </ul>                   
+                    <button class="class-button" id="evocador">Elegir</button>
+                </div>              
+
+                <div class="class-description arcanista-container">
+                    <h2>Arcanista</h2>
+                    <p>Los Arcanistas son maestros de la Energía Arcana, una luz cósmica que les permite manipular objetos y realidades. Guiados por la curiosidad y el conocimiento, exploran los secretos del universo y canalizan el poder de las estrellas. Con su habilidad, pueden abrir portales y alterar el tiempo, convirtiéndose en faros de sabiduría en la oscuridad.</p>
+                
+                    <p>Con un toque astuto, los Arcanistas pueden elevar su conciencia y conectarse con dimensiones alternas, accediendo a visiones y sabiduría de otros mundos. Aunque su inclinación es hacia el aprendizaje, son guerreros ingeniosos. En combate, desatan rayos de energía y crean barreras protectoras, mostrando su poder ante los desafíos.</p>
+                
+                    <h3>Habilidad Especial: Astucia Arcana</h3>
+                    <p>Los Arcanistas cuentan con más ranuras de hechizos.</p>
+                
+                    <h3>Costo de Magia</h3>
+                    <p>El uso de sus hechizos requiere concentración; el uso de sus hechizos reduce su visión y precisión.</p>
+                
+                    <h3>Hechizos Iniciales:</h3>
+                    <ul>
+                        <li><strong>Destello Arcano:</strong> Lanza un rayo de energía que causa daño a un enemigo.</li>
+                        <li><strong>Choque Psíquico:</strong> Aturde a un enemigo, incapacitando su movimiento.</li>
+                        <li><strong>Teletransporte:</strong> Se teletransporta a la posición elegida, atraviesa muros y enemigos.</li>
+                    </ul>                   
+                    <button class="class-button" id="arcanista">Elegir</button>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        // Obtener el nombre de usuario y el nombre del personaje de localStorage
+        const username = localStorage.getItem("username");
+        const playername = localStorage.getItem("playername");
+        
+        // Mostrar los nombres en la página
+        const userInfo = document.getElementById("user-info");
+        userInfo.textContent = `Usuario: ${username || "desconocido"}, Personaje: ${playername || "desconocido"}`;
+
+        // Manejar la selección de clase
+        document.querySelectorAll('.class-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const selectedClass = this.id; // Este es el id del botón, debe coincidir con la clase
+        localStorage.setItem("selectedClass", selectedClass); // Guardar la clase seleccionada
+        alert(`Has elegido la clase: ${selectedClass}`);
+        window.location.href = 'stats.html'; // Redirigir a la siguiente página
+    });
+});
+    </script>
+</body>
+</html>
