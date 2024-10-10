@@ -1,22 +1,90 @@
 // asignarStats.js
 
+// Variable para el enfriamiento
+let cooldown = false;
+
+// Función para manejar el enfriamiento
+function handleCooldown() {
+    cooldown = true; // Activar enfriamiento
+    setTimeout(() => {
+        cooldown = false; // Desactivar enfriamiento después de 1 segundo
+    }, 10); // 1000 ms = 1 segundo
+}
+
 // Función para almacenar los datos del personaje en localStorage
 function guardarDatosPersonaje(username, playername, selectedClass, stats) {
     localStorage.setItem('username', username);
     localStorage.setItem('playername', playername);
-    localStorage.setItem('selectedClass', selectedClass); // Almacena la clase elegida
+    localStorage.setItem('selectedClass', selectedClass);
 
     // Almacenar estadísticas individualmente
-    localStorage.setItem('strength', stats.strength); // Guarda la fuerza
-    localStorage.setItem('agility', stats.agility); // Guarda la agilidad
-    localStorage.setItem('intellect', stats.intellect); // Guarda el intelecto
-    localStorage.setItem('spirit', stats.spirit); // Guarda el espíritu
-    localStorage.setItem('stamina', stats.stamina); // Guarda el aguante
-    localStorage.setItem('versatility', stats.versatility); // Guarda la versatilidad (nueva estadística)
-    localStorage.setItem('availablePoints', stats.availablePoints); // Guarda los puntos sin asignar
+    localStorage.setItem('strength', stats.strength);
+    localStorage.setItem('agility', stats.agility);
+    localStorage.setItem('intellect', stats.intellect);
+    localStorage.setItem('spirit', stats.spirit);
+    localStorage.setItem('stamina', stats.stamina);
+    localStorage.setItem('versatility', stats.versatility);
+    localStorage.setItem('availablePoints', stats.availablePoints);
 
     // Redirigir a game.html después de almacenar los datos
     window.location.href = "todosPersonajes.html";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Aquí cargamos la información del jugador, incluyendo la clase
+    const playerClass = localStorage.getItem("selectedClass"); // Esta sería la clase seleccionada del jugador (esto sería dinámico)
+    
+    // Aplicamos la clase a los botones según la clase del jugador
+    aplicarClaseABotones(playerClass);
+    cargarDatosDesdeLocalStorage();
+});
+
+// Función para cargar los datos del jugador desde localStorage
+function cargarDatosDesdeLocalStorage() {
+    const username = localStorage.getItem('username');
+    const characterName = localStorage.getItem('playername');
+    const chosenClass = localStorage.getItem('selectedClass');
+
+    // Muestra los valores en los campos correspondientes
+    document.getElementById('playerName').textContent = username; 
+    document.getElementById('characterName').textContent = characterName; 
+
+    const classSelectElement = document.getElementById('classSelect');
+    classSelectElement.textContent = chosenClass;
+
+    // Asignar clases CSS según la clase del personaje
+    aplicarClaseACampoClase(chosenClass);
+}
+
+// Función para aplicar la clase a los botones según la clase seleccionada
+function aplicarClaseABotones(playerClass) {
+    const botones = document.querySelectorAll('.stat-btn'); // Selecciona todos los botones de estadísticas
+
+    // Limpiamos las clases anteriores de los botones
+    botones.forEach(boton => {
+        boton.classList.remove('class-aruspice', 'class-conjurador', 'class-evocador', 'class-arcanista');
+    });
+
+    // Agregamos la nueva clase basada en la clase del jugador
+    botones.forEach(boton => {
+        switch (playerClass.toLowerCase()) {
+            case 'aruspice':
+                boton.classList.add('class-aruspice');
+                break;
+            case 'conjurador':
+                boton.classList.add('class-conjurador');
+                break;
+            case 'evocador':
+                boton.classList.add('class-evocador');
+                break;
+            case 'arcanista':
+                boton.classList.add('class-arcanista');
+                break;
+            default:
+                // Si la clase no está definida, no añadimos ninguna clase extra
+                break;
+        }
+    });
 }
 
 // Función para manejar los datos desde username.html
@@ -31,16 +99,16 @@ function manejarDatos() {
         errorMessage.style.display = "block"; // Mostrar el mensaje de error
     } else {
         errorMessage.style.display = "none"; // Ocultar el mensaje de error
-        const selectedClass = localStorage.getItem("selectedClass"); // Obtiene la clase elegida
-        
+        const selectedClass = localStorage.getItem("selectedClass");
+
         // Obtener estadísticas de los inputs
         const stats = {
-            strength: document.getElementById('strengthPoints').value || 0,
-            agility: document.getElementById('agilityPoints').value || 0,
-            intellect: document.getElementById('intellectPoints').value || 0,
-            spirit: document.getElementById('spiritPoints').value || 0,
-            stamina: document.getElementById('staminaPoints').value || 0,
-            versatility: document.getElementById('versatilityPoints').value || 0, // Agregamos versatilidad
+            strength: document.getElementById('strengthPoints').textContent || 0,
+            agility: document.getElementById('agilityPoints').textContent || 0,
+            intellect: document.getElementById('intellectPoints').textContent || 0,
+            spirit: document.getElementById('spiritPoints').textContent || 0,
+            stamina: document.getElementById('staminaPoints').textContent || 0,
+            versatility: document.getElementById('versatilityPoints').textContent || 0,
             availablePoints: document.getElementById('availablePoints').textContent || 0
         };
 
@@ -50,18 +118,20 @@ function manejarDatos() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const username = localStorage.getItem('username'); // Obtiene el nombre de usuario
-    const characterName = localStorage.getItem('playername'); // Obtiene el nombre del personaje
-    const chosenClass = localStorage.getItem('selectedClass'); // Obtiene la clase
+    const username = localStorage.getItem('username');
+    const characterName = localStorage.getItem('playername');
+    const chosenClass = localStorage.getItem('selectedClass');
+
+    // Asignar playername aquí
+    const playername = characterName; 
 
     // Muestra los valores en los campos correspondientes
-    document.getElementById('playerName').textContent = username; // Asigna el nombre de usuario
-    document.getElementById('characterName').textContent = characterName; // Asigna el nombre del personaje
+    document.getElementById('playerName').textContent = username; 
+    document.getElementById('characterName').textContent = characterName; 
 
     const classSelectElement = document.getElementById('classSelect');
-    classSelectElement.textContent = chosenClass; // Asigna la clase
+    classSelectElement.textContent = chosenClass;
 
-    // Asigna la clase CSS dependiendo de la clase del personaje
     switch (chosenClass.toLowerCase()) {
         case 'aruspice':
             classSelectElement.classList.add('class-aruspices');
@@ -76,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
             classSelectElement.classList.add('class-arcanista');
             break;
         default:
-            classSelectElement.classList.add('default-class'); // Clase predeterminada por si no coincide
+            classSelectElement.classList.add('default-class');
             break;
     }
 
@@ -85,44 +155,78 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para actualizar los puntos disponibles
     function updateAvailablePoints() {
-        const strength = parseInt(document.getElementById('strengthPoints').value) || 0;
-        const agility = parseInt(document.getElementById('agilityPoints').value) || 0;
-        const intellect = parseInt(document.getElementById('intellectPoints').value) || 0;
-        const spirit = parseInt(document.getElementById('spiritPoints').value) || 0;
-        const stamina = parseInt(document.getElementById('staminaPoints').value) || 0;
-        const versatility = parseInt(document.getElementById('versatilityPoints').value) || 0; // Incluimos versatilidad
+        const availablePointsElement = document.getElementById('availablePoints');
+        const strength = parseInt(document.getElementById('strengthPoints').textContent) || 0;
+        const agility = parseInt(document.getElementById('agilityPoints').textContent) || 0;
+        const intellect = parseInt(document.getElementById('intellectPoints').textContent) || 0;
+        const spirit = parseInt(document.getElementById('spiritPoints').textContent) || 0;
+        const stamina = parseInt(document.getElementById('staminaPoints').textContent) || 0;
+        const versatility = parseInt(document.getElementById('versatilityPoints').textContent) || 0;
 
-        const assignedPoints = strength + agility + intellect + spirit + stamina + versatility; // Suma versatilidad
+        const assignedPoints = strength + agility + intellect + spirit + stamina + versatility;
         const availablePoints = totalPoints - assignedPoints;
+        availablePointsElement.textContent = availablePoints;
 
-        // Actualiza el campo de puntos disponibles
-        document.getElementById('availablePoints').textContent = availablePoints < 0 ? 0 : availablePoints;
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = availablePoints < 0; // Habilita el botón si hay puntos suficientes
 
-        // Habilita o deshabilita el botón de envío según los puntos disponibles
-        const submitButton = document.getElementById('submitButton'); // Asegúrate de tener un botón con este ID
-        if (availablePoints <= 0) {
-            submitButton.disabled = false; // Habilita el botón si no hay puntos disponibles
-        } else {
-            submitButton.disabled = true; // Deshabilita el botón si hay puntos disponibles
-        }
+        // Habilitar/deshabilitar botones +/-
+        document.querySelectorAll('.plus-btn').forEach(button => {
+            button.disabled = availablePoints <= 0;
+        });
 
-        // Deshabilitar los incrementos si no hay puntos disponibles para aumentar
-        const pointInputs = document.querySelectorAll('input[type="number"]');
-        pointInputs.forEach(input => {
-            if (availablePoints <= 0 && parseInt(input.value) >= 0) {
-                input.value = Math.max(0, input.value); // Asegura que el valor no sea menor a 0
-                input.setAttribute('max', input.value); // Establece el valor máximo para evitar aumentos
-                input.step = "0"; // Cambia el paso a 0 para evitar aumentos
-            } else {
-                input.step = "1"; // Permite aumentos si hay puntos disponibles
-                input.removeAttribute('max'); // Elimina el límite máximo
-            }
+        document.querySelectorAll('.minus-btn').forEach(button => {
+            const statElement = document.getElementById(`${button.dataset.stat}Points`);
+            button.disabled = parseInt(statElement.textContent) <= 0;
         });
     }
 
-    // Escucha cambios en los inputs para actualizar los puntos disponibles
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-        input.addEventListener('input', updateAvailablePoints);
+    function updateStat(stat, increment) {
+        const statElement = document.getElementById(`${stat}Points`);
+        let currentPoints = parseInt(statElement.textContent, 10) || 0; // Asegura que sea un número entero
+        const availablePointsElement = document.getElementById('availablePoints');
+        let availablePoints = parseInt(availablePointsElement.textContent, 10) || 0; // Obtiene puntos disponibles
+
+        if (increment) { // Si se quiere incrementar
+            if (availablePoints > 0) { // Verifica si hay puntos disponibles
+                currentPoints += 1; // Incrementa de 1
+                statElement.textContent = currentPoints; // Actualiza el texto en el elemento
+                console.log(`Aumentando ${stat}. Total: ${currentPoints}`);
+            }
+        } else { // Si se quiere decrementar
+            if (currentPoints > 0) { // Verifica que haya puntos para decrementar
+                currentPoints -= 1; // Decrementa de 1
+                statElement.textContent = currentPoints; // Actualiza el texto en el elemento
+                console.log(`Disminuyendo ${stat}. Total: ${currentPoints}`);
+            }
+        }
+        
+        // Actualiza los puntos disponibles después de cambiar
+        updateAvailablePoints();
+    }
+
+    // Manejo de clics en el formulario para actualizar estadísticas
+    document.getElementById('statsForm').addEventListener('click', function(event) {
+        if (event.target.classList.contains('plus-btn') || event.target.classList.contains('minus-btn')) {
+            // Verificar si está en enfriamiento
+            if (cooldown) {
+                console.log('Enfriamiento activo. Espera un segundo antes de realizar otra acción.');
+                return; // Salir de la función si está en enfriamiento
+            }
+
+            const stat = event.target.getAttribute('data-stat');
+            
+            // Actualizar la estadística
+            if (event.target.classList.contains('plus-btn')) {
+                updateStat(stat, true);
+            }
+            if (event.target.classList.contains('minus-btn')) {
+                updateStat(stat, false);
+            }
+
+            // Manejar el enfriamiento
+            handleCooldown();
+        }
     });
 
     // Código para manejar la asignación de estadísticas
@@ -130,36 +234,19 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Evita el envío del formulario
 
         const stats = {
-            strength: document.getElementById('strengthPoints').value,
-            agility: document.getElementById('agilityPoints').value,
-            intellect: document.getElementById('intellectPoints').value,
-            spirit: document.getElementById('spiritPoints').value,
-            stamina: document.getElementById('staminaPoints').value,
-            versatility: document.getElementById('versatilityPoints').value, // Agregamos versatilidad
-            availablePoints: document.getElementById('availablePoints').textContent // Obtiene puntos disponibles
+            strength: document.getElementById('strengthPoints').textContent,
+            agility: document.getElementById('agilityPoints').textContent,
+            intellect: document.getElementById('intellectPoints').textContent,
+            spirit: document.getElementById('spiritPoints').textContent,
+            stamina: document.getElementById('staminaPoints').textContent,
+            versatility: document.getElementById('versatilityPoints').textContent,
+            availablePoints: document.getElementById('availablePoints').textContent
         };
 
-        // Preguntar al usuario si está seguro
-        const confirmation = confirm("¿Estás seguro de que deseas asignar estas estadísticas?");
-        if (confirmation) {
-            // Mostrar estadísticas en el div statsDisplay
-            const statsDisplay = document.getElementById('statsDisplay');
-            statsDisplay.innerHTML = `<h3>Estadísticas Asignadas:</h3>
-                                      <p>Fuerza: ${stats.strength}</p>
-                                      <p>Agilidad: ${stats.agility}</p>
-                                      <p>Intelecto: ${stats.intellect}</p>
-                                      <p>Espíritu: ${stats.spirit}</p>
-                                      <p>Aguante: ${stats.stamina}</p>
-                                      <p>Versatilidad: ${stats.versatility}</p>`; // Mostramos versatilidad
-
-            console.log('Estadísticas asignadas:', stats);
-            // Almacenar los datos en localStorage
-            guardarDatosPersonaje(username, playername, chosenClass, stats);
-        } else {
-            console.log('Asignación de estadísticas cancelada.');
-        }
+        // Almacena los datos del personaje
+        guardarDatosPersonaje(username, playername, chosenClass, stats);
     });
 
-    // Inicializar la verificación de puntos disponibles al cargar
-    updateAvailablePoints();
+    updateAvailablePoints(); // Llama a la función al cargar para inicializar
 });
+

@@ -1,5 +1,4 @@
 <!-- stats.html -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,103 +32,69 @@
 
             <div class="stats-allocation">
                 <h3>Asigna tus Puntos</h3>
+
+                <!-- Fuerza -->
                 <div class="input-group">
                     <label for="strengthPoints">Fuerza:</label>
-                    <input type="number" id="strengthPoints" min="0" max="6" value="0">
-                    <p>Influye en la calidad y cantidad de Armas y Armaduras que puedes usar.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="strength">-</button>
+                    <span id="strengthPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="strength">+</button>
+                    <p>Aumentar tu Fuerza te permitirá equipar mejores armas y armaduras. Aumentar tu fuerza tiene un ligero impacto en todo el daño que haces.</p>
                 </div>
 
+                <!-- Agilidad -->
                 <div class="input-group">
                     <label for="agilityPoints">Agilidad:</label>
-                    <input type="number" id="agilityPoints" min="0" max="6" value="0">
-                    <p>Aumenta la velocidad y la cantidad de movimientos que tienes.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="agility">-</button>
+                    <span id="agilityPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="agility">+</button>
+                    <p>Aumentar tu agilidad tiene un gran impacto en la cantidad de casillas que puedes moverte, en el alcance de tus hechizos y tiene un ligero impacto en tu resistencia y la cantidad de acciones que puedes hacer por turno.</p>
                 </div>
 
+                <!-- Intelecto -->
                 <div class="input-group">
                     <label for="intellectPoints">Intelecto:</label>
-                    <input type="number" id="intellectPoints" min="0" max="6" value="0">
-                    <p>Influye en la calidad y cantidad de tus hechizos.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="intellect">-</button>
+                    <span id="intellectPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="intellect">+</button>
+                    <p>Aumentar tu intelecto te permitirá aprender más y mejores hechizos, además tiene un ligero impacto en tus escudos espirituales.</p>
                 </div>
 
+                <!-- Espíritu -->
                 <div class="input-group">
                     <label for="spiritPoints">Espíritu:</label>
-                    <input type="number" id="spiritPoints" min="0" max="6" value="0">
-                    <p>Reduce los efectos negativos al utilizar tus hechizos.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="spirit">-</button>
+                    <span id="spiritPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="spirit">+</button>
+                    <p>Aumentar tu espíritu tiene un gran impacto en la cantidad de escudos espirituales que previenen los efectos negativos de tus hechizos. Además tiene un ligero impacto en tu regeneración.</p>
                 </div>
 
+                <!-- Aguante -->
                 <div class="input-group">
                     <label for="staminaPoints">Aguante:</label>
-                    <input type="number" id="staminaPoints" min="0" max="6" value="0">
-                    <p>Aumenta la salud.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="stamina">-</button>
+                    <span id="staminaPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="stamina">+</button>
+                    <p>Aumentar tu aguante tiene un gran impacto en la cantidad de puntos de salud que tienes, y un ligero impacto en la cantidad de casillas que puedes moverte y acciones por turno.</p>
                 </div>
 
-                <!-- Añadir la estadística de Versatilidad -->
+                <!-- Versatilidad -->
                 <div class="input-group">
                     <label for="versatilityPoints">Versatilidad:</label>
-                    <input type="number" id="versatilityPoints" min="0" max="6" value="0">
-                    <p>Aumenta la eficiencia en diferentes áreas como combate y defensa.</p>
+                    <button type="button" class="minus-btn stat-btn" data-stat="versatility">-</button>
+                    <span id="versatilityPoints">0</span>
+                    <button type="button" class="plus-btn stat-btn" data-stat="versatility">+</button>
+                    <p>Aumentar tu versatilidad tiene un gran impacto en la cantidad de daño que haces de todas las fuentes y en tu resistencia. Y un ligero impacto en la cantidad de acciones por turno.</p>
                 </div>
             </div>
 
-            <button id="submitButton" type="submit" disabled>Asignar Estadísticas</button>
+            <button id="submitButton" class ="stat-btn" type="submit" disabled>Asignar Estadísticas</button>
         </form>
 
         <p id="error-message" style="color: red; display: none;"></p> <!-- Mensaje de error -->
         <div id="statsDisplay" class="stats-display"></div>
     </div>
 
-    <script>
-        // Lógica para habilitar/deshabilitar el botón de envío basado en la asignación de puntos
-        const inputs = document.querySelectorAll("input[type='number']");
-        inputs.forEach(input => {
-            input.addEventListener("input", () => {
-                const totalPoints = Array.from(inputs).reduce((sum, input) => sum + parseInt(input.value), 0);
-                const availablePoints = 6; // Cambia este valor según tu lógica
-                document.getElementById("availablePoints").textContent = availablePoints - totalPoints;
-                document.getElementById("submitButton").disabled = totalPoints > availablePoints;
-            });
-        });
-
-        // Código para manejar el evento de envío
-        document.getElementById("statsForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Previene el envío del formulario
-            
-            // Obtener los puntos asignados
-            const strengthPoints = parseInt(document.getElementById("strengthPoints").value);
-            const agilityPoints = parseInt(document.getElementById("agilityPoints").value);
-            const intellectPoints = parseInt(document.getElementById("intellectPoints").value);
-            const spiritPoints = parseInt(document.getElementById("spiritPoints").value);
-            const staminaPoints = parseInt(document.getElementById("staminaPoints").value);
-            const versatilityPoints = parseInt(document.getElementById("versatilityPoints").value);
-
-            const totalAssignedPoints = strengthPoints + agilityPoints + intellectPoints + spiritPoints + staminaPoints + versatilityPoints;
-            const availablePoints = 6; // Cambia este valor según tu lógica
-
-            // Validar si los puntos asignados exceden los disponibles
-            if (totalAssignedPoints > availablePoints) {
-                document.getElementById("error-message").textContent = "No puedes asignar más puntos de los disponibles.";
-                document.getElementById("error-message").style.display = "block";
-            } else {
-                document.getElementById("error-message").style.display = "none"; // Oculta el mensaje de error
-                const username = localStorage.getItem('username');
-                const playername = localStorage.getItem('playername');
-                const selectedClass = localStorage.getItem('selectedClass');
-
-                // Crear objeto de estadísticas
-                const stats = {
-                    strength: strengthPoints,
-                    agility: agilityPoints,
-                    intellect: intellectPoints,
-                    spirit: spiritPoints,
-                    stamina: staminaPoints,
-                    versatility: versatilityPoints,
-                    availablePoints: availablePoints - totalAssignedPoints // Actualizar aquí
-                };
-
-                // Llamar a la función para guardar datos del personaje
-                guardarDatosPersonaje(username, playername, selectedClass, stats);
-            }
-        });
-    </script>
+    <script src="asignarStats.js"></script>
 </body>
 </html>

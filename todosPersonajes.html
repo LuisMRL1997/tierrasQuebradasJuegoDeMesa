@@ -11,9 +11,19 @@
     <div id="personajesContainer"></div>
     <button id="aceptar" style="display: none;">Aceptar</button> <!-- Botón oculto por defecto -->
 
+    <!-- Modal para mostrar habilidades -->
+    <div id="modalHabilidades" class="modal">
+        <div class="modal-content">
+            <h2>Habilidades del Jugador</h2>
+            <ul id="listaHabilidades"></ul>
+            <button class="close-modal">Cerrar</button>
+        </div>
+    </div>
+
     <script type="module">
         import { manejarDatosCompleto } from './todosPersonajes.js'; // Importar la función para manejar creación de personajes
         import playerInstance from './player.js'; // Importar la instancia de Player desde player.js
+        import habilidadesInstance from './menus/habilidades.js'; // Importar la instancia de habilidades.js
 
         // Ejecutar la función para manejar datos completos (creación del personaje) al cargar el documento
         document.addEventListener('DOMContentLoaded', () => {
@@ -23,64 +33,125 @@
 
         // Función para mostrar personajes en el HTML
         function mostrarPersonajes() {
-    const personajes = playerInstance.cargarPersonajes(); // Cargar personajes desde player.js
+            const personajes = playerInstance.cargarPersonajes(); // Cargar personajes desde player.js
+            const personajesContainer = document.getElementById('personajesContainer');
+            const aceptarButton = document.getElementById('aceptar');
 
-    const personajesContainer = document.getElementById('personajesContainer');
-    const aceptarButton = document.getElementById('aceptar');
+            if (personajes.length === 0) {
+                personajesContainer.innerHTML = '<p>No hay personajes almacenados.</p>'; // Mensaje si no hay personajes
+                return;
+            }
 
-    if (personajes.length === 0) {
-        personajesContainer.innerHTML = '<p>No hay personajes almacenados.</p>'; // Mensaje si no hay personajes
-        return;
-    }
+            personajes.forEach(personaje => {
+                const saludMaxima = playerInstance.calcularSalud(personaje); // Calcula la salud máxima
+                const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
+                const resistencia = playerInstance.calcularResistencia(personaje); // Calcula la resistencia
+                const movimientos = playerInstance.calcularMovimientos(personaje); // Calcula los movimientos
 
-    personajes.forEach(personaje => {
-    const salud = playerInstance.calcularSalud(personaje); // Calcula la salud
-    const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
+                const personajeDiv = document.createElement('div');
+                personajeDiv.className = 'personaje';
 
-    const personajeDiv = document.createElement('div');
-    personajeDiv.className = 'personaje';
+                // Comprobar si selectedPortrait está definido
+                let portraitSrc = '';
+                if (personaje.selectedPortrait) {
+                    const basePath = `retratos/jugadores/${personaje.selectedClass}/`;
+                    const portraitId = personaje.selectedPortrait.split('-')[1];
+                    portraitSrc = `${basePath}${portraitId.padStart(2, '0')}.png`; // Formato '01.png', '02.png', etc.
+                } else {
+                    portraitSrc = 'retratos/jugadores/aruspice/01.png'; // Ruta a un retrato por defecto
+                }
 
-    // Comprobar si selectedPortrait está definido
-    let portraitSrc = '';
-    if (personaje.selectedPortrait) {
-        // Definir la ruta base para los retratos
-        const basePath = `retratos/jugadores/${personaje.selectedClass}/`;
-        const portraitId = personaje.selectedPortrait.split('-')[1]; // Obtener el número del retrato
-        portraitSrc = `${basePath}${portraitId.padStart(2, '0')}.png`; // Formato '01.png', '02.png', etc.
-    } else {
-        portraitSrc = 'retratos/jugadores/aruspice/01.png'; // Ruta a un retrato por defecto si no hay seleccionado
-    }
+                personajeDiv.innerHTML = `
+                    <h2>Jugador Nº (${personaje.id})</h2>
+                    <img src="${portraitSrc}" alt="Retrato de ${personaje.playername}" class="personaje-retrato">
+                    <p><strong>Nombre del Jugador:</strong> ${personaje.playername} (${personaje.username})</p>
+                    <p><strong>Clase:</strong> ${personaje.selectedClass}</p>
+                    <p><strong>Nivel:</strong> ${personaje.nivel || 1}</p> 
+                    <p><strong>Salud:</strong> ${personaje.saludActual}/${saludMaxima}</p> 
+                    <p><strong>Fuerza:</strong> ${personaje.strength}</p>
+                    <p><strong>Agilidad:</strong> ${personaje.agility}</p>
+                    <p><strong>Intelecto:</strong> ${personaje.intellect}</p>
+                    <p><strong>Espíritu:</strong> ${personaje.spirit}</p>
+                    <p><strong>Aguante:</strong> ${personaje.stamina}</p>
+                    <p><strong>Versatilidad:</strong> ${personaje.versatility || 0}</p> 
+                    <p><strong>Puntos Sin Asignar:</strong> ${personaje.availablePoints}</p>
+                    <p><strong>Acciones:</strong> ${personaje.acciones || playerInstance.calcularAcciones(personaje)}</p> 
+                    <p><strong>Movimientos:</strong> ${movimientos}</p>
+                    <p><strong>Poder de Ataque:</strong> ${poderAtaque}</p>
+                    <p><strong>Poder Físico:</strong> ${personaje.poderFisico || 0}</p> 
+                    <p><strong>Poder con Hechizos:</strong> ${personaje.poderHechizos || 0}</p> 
+                    <p><strong>Poder Arma:</strong> ${personaje.poderArma || 0}</p> 
+                    <p><strong>Resistencia:</strong> ${resistencia}</p> 
+                    <p><strong>Resistencia Escudo:</strong> ${personaje.resistenciaEscudo || 0}</p>
+                    <p><strong>Resistencia Armadura:</strong> ${personaje.resistenciaArmadura || 0}</p>
+                `;
 
-    personajeDiv.innerHTML = `
-        <h2>Jugador Nº (${personaje.id})</h2>
-        <img src="${portraitSrc}" alt="Retrato de ${personaje.playername}" class="personaje-retrato"> <!-- Mostrar retrato -->
-        <p><strong>Nombre del Jugador:</strong> ${personaje.playername} (${personaje.username})</p>
-        <p><strong>Clase:</strong> ${personaje.selectedClass}</p>
-        <p><strong>Nivel:</strong> ${personaje.nivel || 1}</p> <!-- Añadido nivel por defecto 1 -->
-        <p><strong>Salud:</strong> ${salud}</p> <!-- Mostrar salud calculada -->
-        <p><strong>Fuerza:</strong> ${personaje.strength}</p>
-        <p><strong>Agilidad:</strong> ${personaje.agility}</p>
-        <p><strong>Intelecto:</strong> ${personaje.intellect}</p>
-        <p><strong>Espíritu:</strong> ${personaje.spirit}</p>
-        <p><strong>Aguante:</strong> ${personaje.stamina}</p>
-        <p><strong>Versatilidad:</strong> ${personaje.versatility || 0}</p> <!-- Nueva estadística -->
-        <p><strong>Puntos Sin Asignar:</strong> ${personaje.availablePoints}</p>
-        <p><strong>Acciones:</strong> ${personaje.acciones || playerInstance.calcularAcciones(personaje)}</p> <!-- Mostrar acciones calculadas -->
-        <p><strong>Poder de Ataque:</strong> ${poderAtaque}</p> <!-- Mostrar poder de ataque calculado -->
-        <p><strong>Poder Físico:</strong> ${personaje.poderFisico || 0}</p> <!-- Nueva estadística -->
-        <p><strong>Poder con Hechizos:</strong> ${personaje.poderHechizos || 0}</p> <!-- Nueva estadística -->
-        <p><strong>Poder Arma:</strong> ${personaje.poderArma || 0}</p> <!-- Nueva estadística -->
-    `;
-    personajesContainer.appendChild(personajeDiv); // Agrega el div del personaje al contenedor
-});
+                // Crear un botón para ver las habilidades del personaje
+                const botonHabilidades = document.createElement('button');
+                botonHabilidades.textContent = 'Ver Habilidades';
+                botonHabilidades.onclick = () => mostrarHabilidades(personaje.id);
+                
+                // Asignar la clase al botón según la clase del personaje
+                let claseBoton = '';
+                switch (personaje.selectedClass.toLowerCase()) {
+                    case 'aruspice':
+                        claseBoton = 'class-aruspice';
+                        break;
+                    case 'conjurador':
+                        claseBoton = 'class-conjurador';
+                        break;
+                    case 'evocador':
+                        claseBoton = 'class-evocador';
+                        break;
+                    case 'arcanista':
+                        claseBoton = 'class-arcanista';
+                        break;
+                    // Agrega más casos según otras clases que tengas
+                    default:
+                        claseBoton = '';
+                }
+                botonHabilidades.className = `boton-habilidades ${claseBoton}`; // Agrega la clase de la clase del personaje
+                personajeDiv.appendChild(botonHabilidades);
 
-    // Mostrar el botón "Aceptar" solo si hay personajes
-    aceptarButton.style.display = 'block';
-}
+                // Agregar el personaje al contenedor
+                personajesContainer.appendChild(personajeDiv);
 
-        // Agregar el evento al botón "Aceptar"
+                // Eliminar cualquier clase previa y agregar la nueva clase correspondiente
+                aceptarButton.classList.remove('class-aruspice', 'class-conjurador', 'class-evocador', 'class-arcanista');
+                if (claseBoton) {
+                    aceptarButton.classList.add(claseBoton);
+                }
+            });
+
+            aceptarButton.style.display = 'block'; // Mostrar botón "Aceptar" si hay personajes
+        }
+
+        // Función para mostrar las habilidades del personaje en el modal
+        function mostrarHabilidades(personajeId) {
+            const personaje = playerInstance.personajes.find(p => p.id == personajeId);
+            const habilidades = habilidadesInstance.seleccionarHabilidades(personaje.selectedClass, personaje.intellect);
+
+            const listaHabilidades = document.getElementById('listaHabilidades');
+            listaHabilidades.innerHTML = ''; // Limpiar la lista antes de agregar nuevas habilidades
+
+            habilidades.forEach(habilidad => {
+                const li = document.createElement('li');
+                li.textContent = habilidad;
+                listaHabilidades.appendChild(li);
+            });
+
+            // Mostrar el modal
+            document.getElementById('modalHabilidades').style.display = 'flex';
+        }
+
+        // Función para cerrar el modal
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('modalHabilidades').style.display = 'none'; // Ocultar el modal
+        });
+
+        // Redirigir a la página del juego al hacer clic en "Aceptar"
         document.getElementById('aceptar').addEventListener('click', () => {
-            window.location.href = 'game.html'; // Redirigir a la página del juego
+            window.location.href = 'game.html';
         });
 
     </script>
