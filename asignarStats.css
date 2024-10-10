@@ -132,24 +132,43 @@ button.class-arcanista {
 
  /* Estilos para el modal */
  .modal {
-    display: none; /* Oculto por defecto */
+    display: none; /* Ocultar el modal por defecto */
     position: fixed;
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    z-index: 1000; /* Asegura que esté por encima del resto */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semi-transparente */
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     max-width: 500px;
-    text-align: center;
+    width: 90%; /* Ajustable según necesidades */
+    max-height: 80%; /* Limitar la altura máxima */
+    position: relative; /* Necesario para el layout interno */
+    overflow: hidden;
+}
+
+.habilidades-scroll {
+    max-height: 300px; /* Tamaño fijo para el contenedor de habilidades */
+    overflow-y: auto; /* Permite el scroll vertical */
+    border: 1px solid #ccc; /* Opcional, para delinear el contenedor */
+    padding: 10px;
+    margin-bottom: 20px; /* Espacio entre la lista y los botones */
+}
+
+.habilidad-retrato {
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 .modal-content h2 {
@@ -165,16 +184,87 @@ button.class-arcanista {
     margin-bottom: 10px;
 }
 
-.close-modal {
+/* Estilos generales del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente más sutil */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 600px; /* Ancho máximo más grande */
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+    transition: transform 0.3s ease;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 1.8rem; /* Tamaño de fuente más grande */
+    color: #333; /* Color de texto más oscuro */
+}
+
+.modal-content ul li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.modal-content img {
+    width: 40px; /* Ajuste del tamaño del retrato */
+    height: 40px;
+    margin-right: 10px;
+}
+
+button.close-modal, button#confirmarHabilidades {
     cursor: pointer;
     padding: 10px 20px;
-    background-color: #f44336;
-    color: white;
     border: none;
     border-radius: 5px;
     margin-top: 15px;
+    color: white;
+    transition: background-color 0.3s ease;
 }
 
-.close-modal:hover {
+button.close-modal {
+    background-color: #f44336;
+}
+
+button.close-modal:hover {
     background-color: #d32f2f;
+}
+
+button#confirmarHabilidades {
+    background-color: #4CAF50;
+}
+
+button#confirmarHabilidades:hover {
+    background-color: #45a049;
+}
+
+/* Clases para fondo del modal según la clase del personaje */
+.modal-aruspice .modal-content {
+    background-color: rgba(218, 165, 32, 0.9); /* Dorado */
+}
+
+.modal-conjurador .modal-content {
+    background-color: rgba(227, 81, 64, 0.9); /* Naranja */
+}
+
+.modal-evocador .modal-content {
+    background-color: rgba(0, 127, 102, 0.9); /* Verde */
+}
+
+.modal-arcanista .modal-content {
+    background-color: rgba(50, 0, 150, 0.9); /* Índigo */
 }
