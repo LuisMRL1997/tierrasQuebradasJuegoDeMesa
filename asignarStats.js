@@ -53,7 +53,7 @@ function cargarDatosDesdeLocalStorage() {
     classSelectElement.textContent = chosenClass;
 
     // Asignar clases CSS según la clase del personaje
-    aplicarClaseACampoClase(chosenClass);
+    aplicarClaseABotones(chosenClass);
 }
 
 // Función para aplicar la clase a los botones según la clase seleccionada
@@ -232,7 +232,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Código para manejar la asignación de estadísticas
     document.getElementById('statsForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Evita el envío del formulario
-
+        // Mostrar una alerta de confirmación
+    const isConfirmed = confirm("¿Estás seguro? Una vez que aceptes, no podrás revertir esta acción.");
+    
+    if (isConfirmed) {
         const stats = {
             strength: document.getElementById('strengthPoints').textContent,
             agility: document.getElementById('agilityPoints').textContent,
@@ -242,9 +245,14 @@ document.addEventListener('DOMContentLoaded', function () {
             versatility: document.getElementById('versatilityPoints').textContent,
             availablePoints: document.getElementById('availablePoints').textContent
         };
+                // Almacena los datos del personaje
+                guardarDatosPersonaje(username, playername, chosenClass, stats);
+    } else {
+          console.log("El jugador canceló la confirmación.");
+          // No se realiza ninguna acción si se cancela
+        }
 
-        // Almacena los datos del personaje
-        guardarDatosPersonaje(username, playername, chosenClass, stats);
+
     });
 
     updateAvailablePoints(); // Llama a la función al cargar para inicializar
