@@ -11,6 +11,7 @@ export function reiniciarJuego() {
     // Reiniciar el array de personajes en la instancia de Player
     playerInstance.personajes = []; // Reinicia el arreglo de personajes
     playerInstance.guardarPersonajes(); // Guarda el arreglo vacío en localStorage
+    window.location.href = '../username.html'; // Regresa a la página de nombre de usuario
 }
 
 // Puedes exportar la función para usarla en otros módulos
