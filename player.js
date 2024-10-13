@@ -1,4 +1,4 @@
-import habilidadesInstance from './menus/habilidades.js';
+// player.js
 
 class Player {
     constructor() {
@@ -41,10 +41,11 @@ class Player {
         if (nuevoId !== null) {
             nuevoPersonaje.id = nuevoId; // Asignar el ID disponible
             
-            nuevoPersonaje.habilidadesAprendidas = 0; // Inicia vacío 
-            nuevoPersonaje.habilidadesAprendidasArray = []; // Inicia vacío
-            nuevoPersonaje.talentosAprendidos = 0; // Inicia vacío 
-            nuevoPersonaje.talentosAprendidosArray = []; // Inicia vacío 
+            nuevoPersonaje.habilidadesPosiblesArray = [];
+            nuevoPersonaje.habilidadesAprendidas = 0; 
+            nuevoPersonaje.habilidadesAprendidasArray = [];
+            nuevoPersonaje.talentosAprendidos = 0;
+            nuevoPersonaje.talentosAprendidosArray = [];
 
             this.personajes.push(nuevoPersonaje); // Agrega el nuevo personaje al arreglo
             this.guardarPersonajes(); // Guarda el arreglo actualizado
