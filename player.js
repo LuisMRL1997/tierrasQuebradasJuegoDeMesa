@@ -1,5 +1,3 @@
-// player.js
-
 import habilidadesInstance from './menus/habilidades.js';
 
 class Player {
@@ -9,13 +7,21 @@ class Player {
 
     // Función para cargar personajes desde localStorage
     cargarPersonajes() {
-        const personajesJSON = localStorage.getItem('personajes');
-        return personajesJSON ? JSON.parse(personajesJSON) : []; // Devuelve el arreglo de personajes o un arreglo vacío
+        try {
+            const personajesJSON = localStorage.getItem('personajes');
+            return personajesJSON ? JSON.parse(personajesJSON) : [];
+        } catch (error) {
+            console.error("Error al cargar personajes del localStorage:", error);
+            return [];
+        }
     }
 
-    // Guarda personajes en localStorage
     guardarPersonajes() {
-        localStorage.setItem('personajes', JSON.stringify(this.personajes));
+        try {
+            localStorage.setItem('personajes', JSON.stringify(this.personajes));
+        } catch (error) {
+            console.error("Error al guardar personajes en el localStorage:", error);
+        }
     }
 
     // Método para asignar un ID único del 1 al 4
@@ -29,15 +35,16 @@ class Player {
         return null; // Si todos los IDs están ocupados
     }
 
-    // Método para agregar un personaje y asignar habilidades
+    // Método para agregar un personaje
     agregarPersonaje(nuevoPersonaje) {
         const nuevoId = this.asignarId(); // Asignamos un ID automáticamente
         if (nuevoId !== null) {
             nuevoPersonaje.id = nuevoId; // Asignar el ID disponible
-
-            // Seleccionar habilidades basadas en la clase e intelecto
-            const habilidadesSeleccionadas = habilidadesInstance.seleccionarHabilidades(nuevoPersonaje.selectedClass, nuevoPersonaje.intelecto);
-            nuevoPersonaje.habilidades = habilidadesSeleccionadas; // Asignar las habilidades al personaje
+            
+            nuevoPersonaje.habilidadesAprendidas = 0; // Inicia vacío 
+            nuevoPersonaje.habilidadesAprendidasArray = []; // Inicia vacío
+            nuevoPersonaje.talentosAprendidos = 0; // Inicia vacío 
+            nuevoPersonaje.talentosAprendidosArray = []; // Inicia vacío 
 
             this.personajes.push(nuevoPersonaje); // Agrega el nuevo personaje al arreglo
             this.guardarPersonajes(); // Guarda el arreglo actualizado
@@ -46,17 +53,33 @@ class Player {
         }
     }
 
+// Método para calcular las habilidades disponibles basado en el intelecto
+calcularHabilidadesDisponibles(personaje) {
+    const habilidades = 1 + Math.floor(personaje.intellect / 5); // 1 + 1 por cada 5 puntos de intelecto
+    personaje.habilidadesDisponibles = habilidades; // Guardar la cantidad máxima
+
+    console.log(`Habilidades calculadas para ${personaje.playername}: ${personaje.habilidadesDisponibles}`);
+    return habilidades; // Retornar el número de habilidades calculadas
+}
+
+
+// Método para calcular los talentos disponibles basado en el nivel
+calcularTalentosDisponibles(personaje) {
+    const talentosDisponibles = Math.floor((personaje.nivel + 1) / 2); // 1 por cada nivel impar
+    personaje.talentosDisponibles = talentosDisponibles; // Guardar la cantidad máxima
+
+    console.log(`Talentos calculados para ${personaje.playername}: ${personaje.talentosDisponibles}`);
+    return talentosDisponibles; // Retornar el número de talentos calculados
+}
+
     // Método para calcular la salud de un personaje
     calcularSalud(personaje) {
         const saludMaxima = 1 + personaje.nivel + (personaje.stamina / 2); // Salud máxima calculada
         personaje.saludMaxima = saludMaxima;
 
-        // Si el personaje no tiene saludActual, asigna la salud máxima como valor inicial
         if (!personaje.hasOwnProperty('saludActual')) {
             personaje.saludActual = saludMaxima; // Asignar salud inicial como salud máxima
         }
-
-        // Asegurarse de que la salud actual no sea mayor que la salud máxima
         personaje.saludActual = Math.min(personaje.saludActual, saludMaxima);
 
         console.log(`Salud calculada para ${personaje.playername}: ${personaje.saludActual}/${saludMaxima}`);
@@ -71,42 +94,31 @@ class Player {
 
         let bonificacionVersatilidad = 0;
 
-        // Verificar si la clase es Arcanista
         if (versatilidad % 3 === 0 && versatilidad > 0) {
             if (selectedClass === 'arcanista') {
-                // Si es Arcanista, 3 de poder por cada 3 de versatilidad
                 bonificacionVersatilidad = Math.floor(versatilidad / 3) * 3;
             } else {
-                // Para otras clases, 1 de poder por cada 3 de versatilidad
                 bonificacionVersatilidad = Math.floor(versatilidad / 3);
             }
         }
 
         console.log(`Poder de ataque calculado para ${personaje.playername}: ${1 + poderArma + bonificacionVersatilidad}`);
-        return 1 + poderArma + bonificacionVersatilidad; // Fórmula del poder de ataque con la nueva condición
+        return 1 + poderArma + bonificacionVersatilidad;
     }
 
     // Método para calcular la resistencia del personaje
     calcularResistencia(personaje) {
         const { resistenciaEscudo = 0, resistenciaArmadura = 0, agility = 0, versatility = 0, nivel = 1, selectedClass = '' } = personaje;
-
         let resistencia = resistenciaEscudo + resistenciaArmadura;
 
-        // Añadir 1 punto por cada múltiplo de 6 en agilidad
         if (agility % 6 === 0 && agility > 0) {
             resistencia += Math.floor(agility / 6);
         }
-
-        // Añadir 1 punto por cada múltiplo de 6 en versatilidad
         if (versatility % 6 === 0 && versatility > 0) {
             resistencia += Math.floor(versatility / 6);
         }
-
-        // Si la clase es evocador, añadir 1 punto extra
         if (selectedClass.toLowerCase() === 'evocador') {
             resistencia += 1;
-
-            // Añadir 1 punto extra cada 3 niveles
             resistencia += Math.floor(nivel / 3);
         }
 
@@ -116,20 +128,12 @@ class Player {
 
     // Método para calcular las acciones del personaje
     calcularAcciones(personaje) {
-        if (!personaje.hasOwnProperty('agility') || !personaje.hasOwnProperty('selectedClass')) {
-            console.error('El personaje no tiene agilidad o clase definida');
-            return undefined; // O algún valor por defecto
-        }
-
         const { agility, selectedClass } = personaje;
-        let acciones = 2; // Valor base
+        let acciones = 2;
 
-        // Aumentar por agilidad, si es un múltiplo de 6
         if (agility % 6 === 0 && agility > 0) {
             acciones += Math.floor(agility / 6);
         }
-
-        // Aumentar en 1 si la clase es "conjurador"
         if (selectedClass.toLowerCase() === 'conjurador') {
             acciones += 1;
         }

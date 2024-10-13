@@ -11,11 +11,13 @@ export function mostrarPersonajes() {
 
     if (personajes.length === 0) {
         personajesContainer.innerHTML = '<p>No hay personajes almacenados.</p>'; // Mensaje si no hay personajes
-        return;
+        return; 
     }
 
     personajes.forEach((personaje, index) => {
         const saludMaxima = playerInstance.calcularSalud(personaje); // Calcula la salud máxima
+        const habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
+        const talentosDisponibles = playerInstance.calcularTalentosDisponibles(personaje);
         const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
         const resistencia = playerInstance.calcularResistencia(personaje); // Calcula la resistencia
         const movimientos = playerInstance.calcularMovimientos(personaje); // Calcula los movimientos
@@ -49,6 +51,11 @@ export function mostrarPersonajes() {
             <p><strong>Poder de Ataque:</strong> ${poderAtaque}</p> 
             <p><strong>Resistencia:</strong> ${resistencia}</p>
             <p><strong>Movimientos:</strong> ${movimientos}</p>
+
+            <!-- Añadimos la nueva información de talentos y habilidades -->
+              <p><strong>Habilidades:</strong> ${personaje.habilidadesAprendidas}/${personaje.habilidadesDisponibles}</p>
+<p><strong>Talentos:</strong> ${personaje.talentosAprendidos}/${personaje.talentosDisponibles}</p>
+
         `;
 
         // Crear un botón para ver las habilidades del personaje
@@ -91,7 +98,7 @@ export function mostrarPersonajes() {
     });
 }
 
-        // Redirigir a la página del juego al hacer clic en "Aceptar"
-        document.getElementById('aceptar').addEventListener('click', () => {
-            window.location.href = 'game.html';
-        });
+// Redirigir a la página del juego al hacer clic en "Aceptar"
+document.getElementById('aceptar').addEventListener('click', () => {
+    window.location.href = 'game.html';
+});
