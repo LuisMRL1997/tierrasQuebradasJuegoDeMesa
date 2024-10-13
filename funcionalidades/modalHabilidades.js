@@ -1,35 +1,48 @@
-import { abrirModal, cerrarModal } from './modal.js'; // Importar funciones de apertura/cierre de modal
+// modalHabilidades.js
 
-export let habilidadesSeleccionadas = []; // Array para almacenar habilidades seleccionadas temporalmente
+import { abrirModal, cerrarModal } from './modal.js'; // Importar funciones de apertura/cierre de modal
+import playerInstance from '../player.js'; // Ajustar la importación de player.js
+
+export let habilidadSeleccionada = null; // Variable para almacenar la habilidad seleccionada
 
 // Función para mostrar las habilidades del personaje en el modal
 export function mostrarHabilidades(personajeId, playerInstance, habilidadesInstance) {
     const personaje = playerInstance.personajes.find(p => p.id == personajeId);
     const habilidades = habilidadesInstance.obtenerHabilidadesPorClase(personaje.selectedClass);
-    const maxHabilidades = habilidadesInstance.calcularCantidadHabilidades(personaje.intellect);
+
+    // Calcular las habilidades disponibles - aprendidas
+    const habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
+    const habilidadesAprendidas = personaje.habilidadesAprendidas || 0;
+    const habilidadesRestantes = habilidadesDisponibles - habilidadesAprendidas;
 
     const listaHabilidades = document.getElementById('listaHabilidades');
     listaHabilidades.innerHTML = ''; // Limpiar la lista antes de agregar nuevas habilidades
-    habilidadesSeleccionadas = []; // Reiniciar la lista de habilidades seleccionadas
+    habilidadSeleccionada = null; // Reiniciar la habilidad seleccionada
+
+// Mostrar cuántas habilidades se pueden aprender
+const habilidadesInfo = document.getElementById('habilidadesInfo');
+
+// Pluralización y mensaje natural
+if (habilidadesRestantes === 1) {
+    habilidadesInfo.textContent = `Tienes 1 punto de habilidad disponible.`;
+} else if (habilidadesRestantes > 1) {
+    habilidadesInfo.textContent = `Tienes ${habilidadesRestantes} puntos de habilidad disponibles.`;
+} else {
+    habilidadesInfo.textContent = `No tienes puntos de habilidad disponibles.`;
+}
 
     habilidades.forEach((habilidad) => {
         const li = document.createElement('li');
         
-        // Crear el checkbox para seleccionar la habilidad
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = habilidad.nombre;
+        // Crear el radio para seleccionar la habilidad (solo una a la vez)
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'habilidad'; // Asegurar que solo se pueda seleccionar uno
+        radio.value = habilidad.nombre;
 
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                if (habilidadesSeleccionadas.length < maxHabilidades) {
-                    habilidadesSeleccionadas.push(habilidad);
-                } else {
-                    checkbox.checked = false; // Evitar seleccionar más de las permitidas
-                    alert(`Solo puedes seleccionar hasta ${maxHabilidades} habilidades.`);
-                }
-            } else {
-                habilidadesSeleccionadas = habilidadesSeleccionadas.filter(h => h.nombre !== habilidad.nombre);
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                habilidadSeleccionada = habilidad;
             }
         });
 
@@ -44,8 +57,8 @@ export function mostrarHabilidades(personajeId, playerInstance, habilidadesInsta
             <strong>Alcance:</strong> ${habilidad.alcance}
         `;
 
-        // Añadir el checkbox al elemento de lista
-        li.prepend(checkbox);
+        // Añadir el radio al elemento de lista
+        li.prepend(radio);
         listaHabilidades.appendChild(li);
     });
 
@@ -85,8 +98,12 @@ export function mostrarHabilidades(personajeId, playerInstance, habilidadesInsta
 
 // Confirmar selección de habilidades
 export function confirmarHabilidades() {
-    console.log('Habilidades seleccionadas:', habilidadesSeleccionadas);
-    cerrarModal('modalHabilidades'); // Ocultar el modal
+    if (habilidadSeleccionada) {
+        console.log('Habilidad seleccionada:', habilidadSeleccionada);
+        cerrarModal('modalHabilidades'); // Ocultar el modal
+    } else {
+        alert('Por favor, selecciona una habilidad antes de confirmar.');
+    }
 }
 
 // Event listeners para confirmar y cerrar el modal

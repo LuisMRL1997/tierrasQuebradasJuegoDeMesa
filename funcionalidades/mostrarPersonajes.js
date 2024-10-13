@@ -82,13 +82,12 @@ export function mostrarPersonajes() {
         }
         botonHabilidades.className = `boton-habilidades ${claseBoton}`; // Añadir clase dinámica
         personajeDiv.appendChild(botonHabilidades);
-
         personajesContainer.appendChild(personajeDiv);
 
         // Añadir el evento para mostrar habilidades al botón
         botonHabilidades.addEventListener('click', () => {
             mostrarHabilidades(personaje.id, playerInstance, habilidadesInstance);
-            abrirModal(); // Abrir el modal
+            abrirModal(modalHabilidades); // Abrir el modal
         });
 
         // Asignar clase dinámica al botón "Aceptar" según el primer personaje

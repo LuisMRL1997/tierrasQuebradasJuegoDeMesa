@@ -150,6 +150,25 @@ calcularTalentosDisponibles(personaje) {
         return movimientos;
     }
 
+    // Nuevo método para crear las habilidades, que debe ejecutarse después de calcular el poder de ataque y los movimientos
+    crearHabilidadesPersonaje(personaje) {
+        const poderAtaque = personaje.poderAtaque;
+        const movimientos = personaje.movimientos;
+        console.log('Personaje:', personaje);
+        console.log('Poder de ataque:', personaje.poderAtaque);
+        console.log('Movimientos:', personaje.movimientos);
+        console.log('Selected Class:', personaje.selectedClass);
+  
+      
+        // Ahora llamamos a crearHabilidades pasando el poder de ataque y los movimientos ya calculados
+        personaje.habilidadesDisponiblesArray = crearHabilidades(poderAtaque, movimientos)[personaje.selectedClass.toLowerCase()];
+      
+        console.log(`Habilidades asignadas a ${personaje.playername}:`, personaje.habilidadesDisponiblesArray);
+      
+        // Guardamos el personaje nuevamente con las habilidades asignadas
+        this.guardarPersonajes();
+      }
+
     // Otros métodos para manejar personajes (subir de nivel, etc.)
 }
 
