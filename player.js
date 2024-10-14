@@ -1,6 +1,7 @@
 // player.js
 
 import { crearHabilidades } from './menus/constructorHabilidades.js';
+import { mostrarPersonajes } from './funcionalidades/mostrarPersonajes.js';
 
 class Player {
     constructor() {
@@ -17,8 +18,8 @@ class Player {
         agregarPersonaje(nuevoPersonaje) {
             const nuevoId = this.asignarId(); // Asignamos un ID automáticamente
             if (nuevoId !== null) {
-                nuevoPersonaje.id = nuevoId; // Asignar el ID disponible
-                
+                nuevoPersonaje.id = nuevoId; // Asignar el ID disponible   
+                nuevoPersonaje.habilidadesYa = false;             
                 nuevoPersonaje.habilidadesPosiblesArray = [];
                 nuevoPersonaje.habilidadesAprendidas = 0; 
                 nuevoPersonaje.habilidadesAprendidasArray = [];
@@ -77,7 +78,7 @@ class Player {
         personaje.habilidadesDisponibles = habilidades; // Guardar la cantidad máxima
 
         console.log(`Habilidades calculadas para ${personaje.playername}: ${personaje.habilidadesDisponibles}`);
-        return habilidades; // Retornar el número de habilidades calculadas
+        return personaje.habilidadesDisponibles; // Retornar el número de habilidades calculadas
     }
 
     // Método para calcular los talentos disponibles basado en el nivel
@@ -86,21 +87,21 @@ class Player {
         personaje.talentosDisponibles = talentosDisponibles; // Guardar la cantidad máxima
 
         console.log(`Talentos calculados para ${personaje.playername}: ${personaje.talentosDisponibles}`);
-        return talentosDisponibles; // Retornar el número de talentos calculados
+        return personaje.talentosDisponibles; // Retornar el número de talentos calculados
     }
 
     // Método para calcular la salud de un personaje
     calcularSalud(personaje) {
-        let saludMaxima = 1 + personaje.nivel + (personaje.stamina / 2); // Salud máxima calculada
+        let saludMaxima = (1 + personaje.nivel + (personaje.stamina / 2)); // Salud máxima calculada
         personaje.saludMaxima = saludMaxima;
 
         if (!personaje.hasOwnProperty('saludActual')) {
             personaje.saludActual = saludMaxima; // Asignar salud inicial como salud máxima
         }
-        personaje.saludActual = Math.min(personaje.saludActual, saludMaxima);
+        personaje.saludActual = Math.min(personaje.saludActual, personaje.saludMaxima);
 
         console.log(`Salud calculada para ${personaje.playername}: ${personaje.saludActual}/${saludMaxima}`);
-        return personaje.saludMaxima = saludMaxima;
+        return personaje.saludMaxima, personaje.saludActual;
     }
 
     // Método para calcular el poder de ataque
@@ -194,19 +195,22 @@ calcularResistencia(personaje) {
     crearHabilidadesPersonaje(personaje) {
         const poderAtaque = personaje.poderAtaque;
         const movimientos = personaje.movimientos;
+        let habilidadesYa = personaje.habilidadesYa;
         console.log('Personaje:', personaje);
         console.log('Poder de ataque:', poderAtaque);
         console.log('Movimientos:', movimientos);
         console.log('Selected Class:', personaje.selectedClass);
   
         // Ahora llamamos a crearHabilidades pasando el poder de ataque y los movimientos ya calculados
-        personaje.habilidadesDisponiblesArray = crearHabilidades(poderAtaque, movimientos)[personaje.selectedClass.toLowerCase()];
-        this.habilidadesPorClase = personaje.habilidadesDisponiblesArray;
+        if (habilidadesYa === false){
+            personaje.habilidadesDisponiblesArray = crearHabilidades(poderAtaque, movimientos)[personaje.selectedClass.toLowerCase()];
+            personaje.habilidadesYa = true;
+        }
         console.log(`Habilidades asignadas a ${personaje.playername}:`, personaje.habilidadesDisponiblesArray);
       
         // Guardamos el personaje nuevamente con las habilidades asignadas
         this.guardarPersonajes();
-        
+        return personaje.habilidadesDisponiblesArray, personaje.habilidadesYa;
     }
 
     // Método para subir de nivel
@@ -215,8 +219,26 @@ calcularResistencia(personaje) {
         this.actualizarModalHabilidades(personaje); // Actualiza habilidades al subir de nivel
     }
 
+    guardarHabilidades(personaje, habilidadSeleccionada) {
+        personaje.habilidadesAprendidas++; 
+        personaje.habilidadesAprendidasArray.push(habilidadSeleccionada);
+        console.log(`Habilidades guardadas para ${personaje.playername}:`, personaje.habilidadesAprendidasArray);
+        console.log(`Cantidad de habilidades aprendidas por ${personaje.playername}:`, personaje.habilidadesAprendidas);
+        this.guardarPersonajes();
+    
+        // Recargar la página suavemente
+        setTimeout(() => {
+            window.location.reload(); // Esto refrescará la página
+        }, 500); // Le da un pequeño retraso para que se vean los logs antes de refrescar
+    
+        return personaje.habilidadesAprendidas, personaje.habilidadesAprendidasArray;
+    }
+    
+
     // Otros métodos para manejar personajes (subir de nivel, etc.)
 }
+
+
 
 // Exportar la instancia de Player para usarla en otros módulos
 const playerInstance = new Player();

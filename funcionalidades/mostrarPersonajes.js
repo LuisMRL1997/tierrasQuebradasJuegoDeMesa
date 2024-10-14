@@ -15,14 +15,9 @@ export function mostrarPersonajes() {
     }
 
     personajes.forEach((personaje, index) => {
-        const saludMaxima = playerInstance.calcularSalud(personaje); // Calcula la salud máxima
-        const habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
-        const talentosDisponibles = playerInstance.calcularTalentosDisponibles(personaje);
-        const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
-        const resistencia = playerInstance.calcularResistencia(personaje); // Calcula la resistencia
-        const movimientos = playerInstance.calcularMovimientos(personaje); // Calcula los movimientos
-        playerInstance.crearHabilidadesPersonaje(personaje);
-
+        let saludMaxima = playerInstance.calcularSalud(personaje); // Calcula la salud máxima
+        let habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
+        let talentosDisponibles = playerInstance.calcularTalentosDisponibles(personaje);
         const personajeDiv = document.createElement('div');
         personajeDiv.className = 'personaje';
 

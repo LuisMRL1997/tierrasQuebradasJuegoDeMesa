@@ -1,4 +1,5 @@
 //modalHabilidades.js
+import playerInstance from '../player.js';
 import { abrirModal, cerrarModal } from './modal.js'; // Importar funciones de apertura/cierre de modal
 
 export let habilidadSeleccionada = null; // Variable para almacenar la habilidad seleccionada
@@ -7,6 +8,7 @@ export let habilidadSeleccionada = null; // Variable para almacenar la habilidad
 export let personaje = null;
 export let habilidades = [];
 export let habilidadesDisponibles = 0;
+export let habilidadesDisponiblesArray = [];
 export let habilidadesAprendidas = 0;
 export let habilidadesRestantes = 0;
 
@@ -14,7 +16,8 @@ export let habilidadesRestantes = 0;
 export function mostrarHabilidades(personajeId, playerInstance, habilidadesInstance) {
     // Asignar valores a las variables globales
     personaje = playerInstance.personajes.find(p => p.id == personajeId);
-    habilidades = habilidadesInstance.obtenerHabilidadesPorClase(personaje.selectedClass);
+    playerInstance.crearHabilidadesPersonaje(personaje);
+    habilidades = personaje.habilidadesDisponiblesArray;
     habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
     habilidadesAprendidas = personaje.habilidadesAprendidas || 0;
     habilidadesRestantes = habilidadesDisponibles - habilidadesAprendidas;
@@ -114,7 +117,10 @@ export function confirmarHabilidades() {
             personaje.habilidadesAprendidasArray.push(habilidadSeleccionada);
             
             // Incrementar el contador de habilidades aprendidas
-            personaje.habilidadesAprendidas += 1;
+            
+
+
+            playerInstance.guardarHabilidades(personaje, habilidadSeleccionada);
 
 
             console.log('Habilidad seleccionada:', habilidadSeleccionada);
