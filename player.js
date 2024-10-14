@@ -35,7 +35,7 @@ class Player {
     
                 this.personajes.push(nuevoPersonaje); // Agrega el nuevo personaje al arreglo
                 this.guardarPersonajes(); // Guarda el arreglo actualizado
-                this.actualizarHabilidades(personaje);
+                this.actualizarHabilidades(nuevoPersonaje);
             } else {
                 console.error('No se pueden agregar más personajes. Todos los IDs están ocupados.');
             }

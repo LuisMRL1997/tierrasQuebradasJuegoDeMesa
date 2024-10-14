@@ -1,35 +1,39 @@
-// modalHabilidades.js
-
+//modalHabilidades.js
 import { abrirModal, cerrarModal } from './modal.js'; // Importar funciones de apertura/cierre de modal
-import playerInstance from '../player.js';
 
 export let habilidadSeleccionada = null; // Variable para almacenar la habilidad seleccionada
 
+// Variables globales
+export let personaje = null;
+export let habilidades = [];
+export let habilidadesDisponibles = 0;
+export let habilidadesAprendidas = 0;
+export let habilidadesRestantes = 0;
+
 // Función para mostrar las habilidades del personaje en el modal
 export function mostrarHabilidades(personajeId, playerInstance, habilidadesInstance) {
-    const personaje = playerInstance.personajes.find(p => p.id == personajeId);
-    const habilidades = habilidadesInstance.obtenerHabilidadesPorClase(personaje.selectedClass);
-    
-    // Calcular las habilidades disponibles - aprendidas
-    const habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
-    const habilidadesAprendidas = personaje.habilidadesAprendidas || 0;
-    const habilidadesRestantes = habilidadesDisponibles - habilidadesAprendidas;
+    // Asignar valores a las variables globales
+    personaje = playerInstance.personajes.find(p => p.id == personajeId);
+    habilidades = habilidadesInstance.obtenerHabilidadesPorClase(personaje.selectedClass);
+    habilidadesDisponibles = playerInstance.calcularHabilidadesDisponibles(personaje);
+    habilidadesAprendidas = personaje.habilidadesAprendidas || 0;
+    habilidadesRestantes = habilidadesDisponibles - habilidadesAprendidas;
 
     const listaHabilidades = document.getElementById('listaHabilidades');
     listaHabilidades.innerHTML = ''; // Limpiar la lista antes de agregar nuevas habilidades
     habilidadSeleccionada = null; // Reiniciar la habilidad seleccionada
 
-// Mostrar cuántas habilidades se pueden aprender
-const habilidadesInfo = document.getElementById('habilidadesInfo');
+    // Mostrar cuántas habilidades se pueden aprender
+    const habilidadesInfo = document.getElementById('habilidadesInfo');
 
-// Pluralización y mensaje natural
-if (habilidadesRestantes === 1) {
-    habilidadesInfo.textContent = `Tienes 1 punto de habilidad disponible.`;
-} else if (habilidadesRestantes > 1) {
-    habilidadesInfo.textContent = `Tienes ${habilidadesRestantes} puntos de habilidad disponibles.`;
-} else {
-    habilidadesInfo.textContent = `No tienes puntos de habilidad disponibles.`;
-}
+    // Pluralización y mensaje natural
+    if (habilidadesRestantes === 1) {
+        habilidadesInfo.textContent = `Tienes 1 punto de habilidad disponible.`;
+    } else if (habilidadesRestantes > 1) {
+        habilidadesInfo.textContent = `Tienes ${habilidadesRestantes} puntos de habilidad disponibles.`;
+    } else {
+        habilidadesInfo.textContent = `No tienes puntos de habilidad disponibles.`;
+    }
 
     habilidades.forEach((habilidad) => {
         const li = document.createElement('li');
@@ -97,11 +101,8 @@ if (habilidadesRestantes === 1) {
 }
 
 // Confirmar selección de habilidades
-export function confirmarHabilidades(playerInstance, personajeId) {
+export function confirmarHabilidades() {
     if (habilidadSeleccionada) {
-        // Encontrar el personaje seleccionado
-        const personaje = playerInstance.personajes.find(p => p.id == personajeId);
-        
         // Verificar que el personaje exista
         if (personaje) {
             // Si no tiene el array de habilidades aprendidas, inicializarlo
@@ -115,8 +116,6 @@ export function confirmarHabilidades(playerInstance, personajeId) {
             // Incrementar el contador de habilidades aprendidas
             personaje.habilidadesAprendidas += 1;
 
-            // Guardar los cambios en el almacenamiento local
-            playerInstance.guardarPersonajes();
 
             console.log('Habilidad seleccionada:', habilidadSeleccionada);
             console.log(`Habilidades aprendidas por ${personaje.playername}:`, personaje.habilidadesAprendidasArray);
@@ -130,8 +129,6 @@ export function confirmarHabilidades(playerInstance, personajeId) {
         alert('Por favor, selecciona una habilidad antes de confirmar.');
     }
 }
-
-
 
 // Event listeners para confirmar y cerrar el modal
 document.getElementById('confirmarHabilidades').addEventListener('click', confirmarHabilidades);
