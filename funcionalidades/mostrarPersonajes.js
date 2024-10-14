@@ -21,6 +21,7 @@ export function mostrarPersonajes() {
         const poderAtaque = playerInstance.calcularPoderAtaque(personaje); // Calcula el poder de ataque
         const resistencia = playerInstance.calcularResistencia(personaje); // Calcula la resistencia
         const movimientos = playerInstance.calcularMovimientos(personaje); // Calcula los movimientos
+        playerInstance.crearHabilidadesPersonaje(personaje);
 
         const personajeDiv = document.createElement('div');
         personajeDiv.className = 'personaje';
@@ -48,14 +49,13 @@ export function mostrarPersonajes() {
             <p><strong>Espíritu:</strong> ${personaje.spirit}</p>
             <p><strong>Aguante:</strong> ${personaje.stamina}</p>
             <p><strong>Versatilidad:</strong> ${personaje.versatility || 0}</p> 
-            <p><strong>Poder de Ataque:</strong> ${poderAtaque}</p> 
-            <p><strong>Resistencia:</strong> ${resistencia}</p>
-            <p><strong>Movimientos:</strong> ${movimientos}</p>
+            <p><strong>Poder de Ataque:</strong> ${personaje.poderAtaque}</p> 
+            <p><strong>Resistencia:</strong> ${personaje.resistencia}</p>
+            <p><strong>Movimientos:</strong> ${personaje.movimientos}</p>
 
             <!-- Añadimos la nueva información de talentos y habilidades -->
-              <p><strong>Habilidades:</strong> ${personaje.habilidadesAprendidas}/${personaje.habilidadesDisponibles}</p>
-<p><strong>Talentos:</strong> ${personaje.talentosAprendidos}/${personaje.talentosDisponibles}</p>
-
+            <p><strong>Habilidades:</strong> ${personaje.habilidadesAprendidas}/${personaje.habilidadesDisponibles}</p>
+            <p><strong>Talentos:</strong> ${personaje.talentosAprendidos}/${personaje.talentosDisponibles}</p>
         `;
 
         // Crear un botón para ver las habilidades del personaje
@@ -86,8 +86,14 @@ export function mostrarPersonajes() {
 
         // Añadir el evento para mostrar habilidades al botón
         botonHabilidades.addEventListener('click', () => {
+            // Actualiza las habilidades en el modal antes de abrirlo
+            let poderAtaque = personaje.poderAtaque;
+            let movimientos = personaje.movimientos;
+            let selectedClass = personaje.selectedClass;
+            habilidadesInstance.actualizarModalHabilidades(selectedClass, poderAtaque, movimientos);
             mostrarHabilidades(personaje.id, playerInstance, habilidadesInstance);
             abrirModal(modalHabilidades); // Abrir el modal
+            
         });
 
         // Asignar clase dinámica al botón "Aceptar" según el primer personaje
@@ -100,4 +106,4 @@ export function mostrarPersonajes() {
 // Redirigir a la página del juego al hacer clic en "Aceptar"
 document.getElementById('aceptar').addEventListener('click', () => {
     window.location.href = 'game.html';
-});
+}); 

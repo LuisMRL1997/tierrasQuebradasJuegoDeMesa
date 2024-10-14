@@ -1,32 +1,34 @@
-export function crearHabilidades() {
+// constructorHabilidades.js
+
+export function crearHabilidades(poderAtaque, movimientos) {
     return { aruspice: [
         {
             id: 1,
             nombre: 'Golpe Virtuoso',
             descripcion: 'Potencia tus armas, asestando un gran golpe al enemigo.',
-            poder: 4,
+            poder: 4 + poderAtaque,
             alcance: 1
         },
         {
             id: 2,
             nombre: 'Expiacion',
             descripcion: 'Ataca al rival con energia sagrada de la virtud y debilita el proximo ataque que haga.',
-            poder: 3,
-            alcance: 1
+            poder: 3 + ((poderAtaque * 3) / 4),
+            alcance: 1 + movimientos
         },
         {
             id: 3,
             nombre: 'Ráfaga de Espinas',
             descripcion: 'Arroja  espinas al objetivo que quedan clavadas en el y le infligen daño la proxima vez que ataque.',
-            poder: 3,
-            alcance: 1
+            poder: 3 + ((poderAtaque * 3) / 4),
+            alcance: 1 + movimientos
         },
         {
           id: 4,
           nombre: 'Luz Sagrada',
           descripcion: 'Te sanas a ti o al aliado seleccionado.',
-          poder: 4,
-          alcance: 3
+          poder: 1 + ((poderAtaque * 3) / 4),
+          alcance: 3 + movimientos
         },
         {
           id: 5,
