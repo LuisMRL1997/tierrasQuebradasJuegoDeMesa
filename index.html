@@ -1,50 +1,33 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dungeon Crawler - Bienvenida</title>
-
-  <!-- Tu CSS local -->
   <link rel="stylesheet" href="welcome.css">
-  <link rel="stylesheet" href="boton.css"> 
 </head>
-<body class="welcome">
-  <h1>
-    <span class="welcome-text">Te doy la bienvenida a</span><br>
-    <span class="title-text">Tierras Quebradas</span><br>
-    <span class="game-text">El juego de mesa.</span>
-  </h1>       
+<body class="welcome"> <!-- Añadido la clase 'welcome' para aplicar estilos -->
+    <h1>
+        <span class="welcome-text">Te doy la bienvenida a</span><br>
+        <span class="title-text">Tierras Quebradas</span><br>
+        <span class="game-text">El juego de mesa.</span>
+    </h1>       
   <p>Escoge el modo de juego:</p>
   
-  <!-- Botones -->
-  <button id="solo" class="btn btn-primary">Jugar en Solitario</button>
-  <button id="multijugador" class="btn btn-secondary">Multijugador</button>
+  <button id="solo">Jugar en Solitario</button>
+  <button id="multijugador">Multijugador</button>
 
-  <!-- Aquí cargamos el footer -->
-  <div id="footer-container"></div>
-  
-  <script src="funcionalidades/bgm.js"></script> <!-- Música de fondo -->
-  <script type="module">
-    import { applyButtonEffects } from '/boton.js';
+  <script>
+    // Añadir eventos a los botones
+    document.getElementById('solo').addEventListener('click', () => {
+      // Redirigir a la página de nombre de usuario
+      window.location.href = 'continuaNuevo.html';
+    });
 
-    // Aplicar los efectos a los botones
-    applyButtonEffects('solo', 'continuaNuevo.html');
-    applyButtonEffects('multijugador', 'multijugadorPage.html'); // Cambia según la página de multijugador
-
-    // Cargar el contenido del footer usando fetch
-    fetch('menus/footer/footer.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-
-        // Ahora que el footer se cargó, actualizamos el ícono de música
-        window.updateMusicIcon();
-      })
-      .catch(error => {
-        console.error("Error al cargar el footer:", error);
-      });
+    document.getElementById('multijugador').addEventListener('click', () => {
+      // Redirigir a la página del juego en modo multijugador
+      window.location.href = 'index.html?mode=multiplayer';
+    });
   </script>
 </body>
 </html>
