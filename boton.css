@@ -1,0 +1,68 @@
+/* botón.css */
+
+/* Estilo de splash mejorado */
+.splash-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible; /* Asegura que los efectos salgan fuera del botón */
+}
+
+/* Estrellas o brillitos con mayor tamaño */
+.star {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    animation: sparkle 0.6s ease-out forwards;
+    opacity: 0;
+    pointer-events: none; /* Para que no interfieran con el botón */
+}
+
+/* Animación explosiva de los brillitos */
+@keyframes sparkle {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(3) translate(var(--x-offset), var(--y-offset));
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(5) translate(var(--x-offset), var(--y-offset));
+        opacity: 0;
+    }
+}
+
+/* Botón de estilo */
+button {
+    position: relative;
+    padding: 15px 30px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: visible; /* Permite que los brillitos se salgan fuera del botón */
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Añadir estilo al hover del botón para mejor interacción */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo del hover con efecto */
+button:active {
+    background-color: #004085;
+}

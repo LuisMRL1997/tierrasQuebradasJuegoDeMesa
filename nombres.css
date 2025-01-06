@@ -1,4 +1,4 @@
-/* welcome.css */
+/* nombres.css */
 body {
     display: flex;
     flex-direction: column; /* Apila el contenido verticalmente */
@@ -9,108 +9,145 @@ body {
     background-color: #1e1e1e;
     color: white;
     text-align: center;
-    font-family: 'Arial', sans-serif; /* Cambia a la fuente deseada */
+    font-family: 'Arial', sans-serif;
 }
 
 .container {
     background-color: rgba(30, 30, 30, 0.8); /* Fondo semi-transparente para el contenedor */
     padding: 20px;
-    border-radius: 10px; /* Esquinas redondeadas */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
-    width: 90%; /* Ancho del contenedor */
-    max-width: 400px; /* Ancho máximo para el contenedor */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box; /* Asegura que el padding no haga que el contenedor se desborde */
+    overflow: hidden; /* Para evitar el desbordamiento de elementos dentro del contenedor */
 }
 
 h1 {
-    margin-bottom: 30px; /* Aumenta el margen inferior */
-    font-size: 2.5rem; /* Tamaño de fuente más grande */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra de texto */
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .input-group {
-    margin-bottom: 20px; /* Espaciado entre los grupos de entrada */
-    text-align: left; /* Alinear etiquetas a la izquierda */
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%; /* Asegura que el grupo de entrada ocupe todo el ancho disponible */
 }
 
 label {
-    display: block; /* Hace que las etiquetas ocupen toda la línea */
-    margin-bottom: 5px; /* Espaciado entre la etiqueta y el campo de entrada */
-    font-weight: bold; /* Negrita para las etiquetas */
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 input[type="text"] {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    padding: 10px; /* Espaciado interno para mayor comodidad */
-    font-size: 1rem; /* Tamaño de fuente estándar */
-    border: 2px solid #3498db; /* Borde del campo de entrada */
-    border-radius: 5px; /* Esquinas redondeadas */
-    background-color: #2c3e50; /* Color de fondo del campo de entrada */
-    color: white; /* Color del texto en el campo de entrada */
-    transition: border-color 0.3s; /* Transición para el borde */
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    background-color: #2c3e50;
+    color: white;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Para que el padding no haga que el campo de entrada se desborde */
 }
 
 input[type="text"]:focus {
-    border-color: #2980b9; /* Cambia el color del borde al enfocar */
-    outline: none; /* Elimina el contorno predeterminado */
+    border-color: #2980b9;
+    outline: none;
 }
 
 button {
-    padding: 12px 24px; /* Aumenta el tamaño del botón */
-    font-size: 1.2rem; /* Tamaño de fuente más grande */
+    padding: 12px 24px;
+    font-size: 1.2rem;
     cursor: pointer;
     border: none;
     border-radius: 5px;
     background-color: #3498db;
     color: white;
-    transition: background-color 0.3s, transform 0.2s; /* Transición en el tamaño */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para efecto de profundidad */
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 button:hover {
     background-color: #2980b9;
-    transform: translateY(-2px); /* Eleva el botón al pasar el ratón */
+    transform: translateY(-2px);
 }
 
 button:active {
-    transform: translateY(0); /* Regresa a la posición original al hacer clic */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Reduce la sombra al hacer clic */
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive Styles */
+/* Estilos Responsivos */
 @media (max-width: 768px) {
     h1 {
-        font-size: 2rem; /* Reduce el tamaño del título en pantallas pequeñas */
+        font-size: 2rem;
     }
 
     .container {
-        padding: 15px; /* Reduce el padding del contenedor */
+        padding: 15px;
+        width: 95%; /* Aumenta el ancho del contenedor en pantallas pequeñas */
     }
 
     button {
-        padding: 10px 20px; /* Ajusta el tamaño del botón */
-        font-size: 1rem; /* Tamaño de fuente más pequeño */
+        padding: 10px 20px;
+        font-size: 1rem;
     }
 
     input[type="text"] {
-        font-size: 0.9rem; /* Ajusta el tamaño de la fuente del campo de entrada */
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.5rem; /* Reduce aún más el tamaño del título en pantallas muy pequeñas */
+        font-size: 1.5rem;
     }
 
     .container {
-        width: 95%; /* Aumenta el ancho del contenedor en pantallas muy pequeñas */
+        width: 95%;
+        padding: 10px; /* Reduce el padding para pantallas muy pequeñas */
     }
 
     button {
-        padding: 8px 16px; /* Aumenta aún más el tamaño del botón */
-        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+        padding: 8px 16px;
+        font-size: 0.9rem;
     }
 
     input[type="text"] {
-        font-size: 0.8rem; /* Ajusta el tamaño de la fuente del campo de entrada */
+        font-size: 0.8rem;
     }
+}
+
+/* Estilos para el botón de música */
+.music-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.music-button:hover {
+    background-color: #2980b9;
+}
+
+.music-button:active {
+    background-color: #3498db;
+}
+
+#icon {
+    font-size: 24px;
 }

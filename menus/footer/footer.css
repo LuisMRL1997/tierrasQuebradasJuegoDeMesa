@@ -1,0 +1,37 @@
+/* menus/footer/footer.css */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Alinea el botón a la derecha */
+    padding: 10px;
+  }
+  
+  .music-button {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  .music-button:hover {
+    background-color: #2980b9; /* Cambio de color al pasar el mouse */
+  }
+  
+  .music-button:active {
+    background-color: #3498db; /* Cambio al presionar */
+  }
+  
+  #icon {
+    font-size: 24px; /* Tamaño del ícono */
+  }
+  

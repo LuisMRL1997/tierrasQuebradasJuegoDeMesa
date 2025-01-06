@@ -99,6 +99,8 @@ export function mostrarPersonajes() {
 }
 
 // Redirigir a la página del juego al hacer clic en "Aceptar"
-document.getElementById('aceptar').addEventListener('click', () => {
-    window.location.href = 'game.html';
-}); 
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('aceptar').addEventListener('click', () => {
+        window.location.href = 'game.html';
+    });
+});

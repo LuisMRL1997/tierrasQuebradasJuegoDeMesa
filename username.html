@@ -1,3 +1,4 @@
+<!-- username.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecciona Nombres</title>
     <link rel="stylesheet" href="nombres.css">
+    <link rel="stylesheet" href="boton.css"> 
     <script defer src="datosPersonaje.js"></script> <!-- Agregar el archivo de datosPersonaje.js -->
 </head>
 <body>
@@ -22,11 +24,37 @@
         <p id="error-message" style="color: red; display: none;"></p> <!-- Mensaje de error -->
     </div>
 
+    <!-- Aquí cargamos el footer -->
+    <div id="footer-container"></div>
+    
     <script>
         // Código de redirección y validación
         document.getElementById("continue-button").addEventListener("click", function() {
             manejarDatos();
         });
+
+        // Cargar el contenido del footer usando fetch
+        fetch('menus/footer/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error("Error al cargar el footer:", error);
+            });
+
+        // Si también necesitas el bgm.js
+        const bgmScript = document.createElement('script');
+        bgmScript.src = 'funcionalidades/bgm.js'; // Asegúrate de que el path es correcto
+        document.body.appendChild(bgmScript);
+    </script>
+
+    <!-- Script con type="module" para permitir el uso de import -->
+    <script type="module">
+        import { applyButtonEffects } from '/boton.js';
+
+        // Aplicar efectos al botón de "continuar"
+        applyButtonEffects('continue-button', '');
     </script>
 </body>
 </html>

@@ -4,28 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Crawler - Continuar o Nuevo Juego</title>
-    <link rel="stylesheet" href="welcome.css"> <!-- Puedes añadir estilos si lo deseas -->
-    <script type="module" src="funcionalidades/reinicio.js" defer></script> <!-- Importar reinicio.js desde la carpeta funcionalidades -->
+    <link rel="stylesheet" href="welcome.css"> <!-- Estilos generales -->
+    <link rel="stylesheet" href="boton.css"> <!-- Estilos para los botones -->
+    <script type="module" src="funcionalidades/reinicio.js" defer></script> <!-- Funcionalidades de reinicio -->
 </head>
 <body class="continua-nuevo">
     <h1>¿Qué deseas hacer?</h1>
     <button id="continuar">Continuar Partida</button>
     <button id="nuevoJuego">Empezar Juego Nuevo</button>
 
-    <script type="module">
-        import { reiniciarJuego } from './funcionalidades/reinicio.js'; // Asegúrate que la ruta es correcta
+    <!-- Aquí cargamos el footer con el botón de música -->
+    <div id="footer-container"></div>
 
-        // Espera a que el DOM esté completamente cargado
+    <script src="funcionalidades/bgm.js"></script> <!-- Música de fondo -->
+    <script type="module">
+        import { reiniciarJuego } from './funcionalidades/reinicio.js'; // Importar función de reinicio
+
+        // Esperar a que el DOM esté completamente cargado
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('continuar').addEventListener('click', () => {
-                // Redirigir a la página del juego en modo continuado
-                window.location.href = 'game.html'; // Cambia a la página donde se continúa el juego
+                window.location.href = 'game.html'; // Redirigir a la página de juego
             });
 
             document.getElementById('nuevoJuego').addEventListener('click', () => {
-    reiniciarJuego(); // Solo llama a la función y deja que esta maneje la redirección
-});
+                reiniciarJuego(); // Iniciar reinicio de juego
+            });
 
+            // Cargar contenido del footer (con el botón de música)
+            fetch('menus/footer/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+
+                    // Actualizar ícono de música después de cargar el footer
+                    window.updateMusicIcon();
+                })
+                .catch(error => {
+                    console.error("Error al cargar el footer:", error);
+                });
         });
     </script>
 </body>
